@@ -1,0 +1,9 @@
+.web
+.vscode
+.assets
+**/*.pyc
+**/.DS_Store
+**/*.swp
+**.web
+**__pycache__
+pynecone.db2
