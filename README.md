@@ -11,15 +11,14 @@
 - Personal website: https://www.jiangmiemie.com
 - Github：https://github.com/jiangmiemie
 
+## Use
 
-if
+`pip install -r requirements.txt`
 
-`AttributeError: module 'httpcore' has no attribute 'SyncHTTPTransport`
+if`AttributeError: module 'httpcore' has no attribute 'SyncHTTPTransport`Please`pip install googletrans==4.0.0-rc1`or`pip install googletrans`
 
-Please
 
-`pip install googletrans==4.0.0-rc1`
+`pc init`
+`pc run`
 
-or
-
-`pip install googletrans`
+enjoy it
