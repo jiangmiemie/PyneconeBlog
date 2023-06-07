@@ -18,8 +18,15 @@ for route in routes:
         route.path,
         route.title,
         description="永远怀着一颗学徒的心",
+        meta=[
+            {
+                "content": "upgrade-insecure-requests",
+            },
+        ],
         image="logo.png",
-        script_tags=[scripts()],
+        script_tags=[
+            scripts(),
+        ],
     )
 
 # Add the middleware.
