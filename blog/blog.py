@@ -19,7 +19,8 @@ for route in routes:
         route.title,
         description="永远怀着一颗学徒的心",
         meta=[
-            {
+            {   
+                "http_equiv": "Content-Security-Policy",
                 "content": "upgrade-insecure-requests",
             },
         ],
