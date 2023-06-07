@@ -166,10 +166,10 @@ def mdpage(text: str, path: str, title: str, time: str, *args, **kwargs):
     return pc.box(
         navbar(),
         pc.box(
+            pc.box(id="contentslist"),
             pc.flex(
                 pc.vstack(
                     pc.box(
-                        pc.box("list", id="contentslist"),
                         comp,
                         pc.divider(),
                         doctext(

@@ -105,13 +105,16 @@ def index() -> pc.Component:
                                     backdrop_filter="blur(10px)",
                                     on_click=NavbarState.change_search,
                                 ),
-                                pc.input(
-                                    placeholder="查找文章",
-                                    on_change=NavbarState.set_search_input,
-                                    _focus={
-                                        "border": f"2px solid {styles.ACCENT_COLOR}",
-                                    },
-                                    backdrop_filter="blur(10px)",
+                                pc.form(
+                                    pc.input(
+                                        placeholder="查找文章",
+                                        on_change=NavbarState.set_search_input,
+                                        _focus={
+                                            "border": f"2px solid {styles.ACCENT_COLOR}",
+                                        },
+                                        backdrop_filter="blur(10px)",
+                                    ),
+                                    on_submit=NavbarState.change_search,
                                 ),
                             ),
                         ),

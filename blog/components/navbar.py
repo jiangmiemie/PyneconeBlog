@@ -6,7 +6,6 @@ from blog.tsclient import client
 
 
 class NavbarState(State):
-
     sidebar_open: bool = False
 
     search_modal: bool = False
@@ -274,13 +273,16 @@ def navbar_index(sidebar: pc.Component = get_sidebar()) -> pc.Component:
                                         backdrop_filter="blur(10px)",
                                         on_click=NavbarState.change_search,
                                     ),
-                                    pc.input(
-                                        placeholder="查找文章",
-                                        on_change=NavbarState.set_search_input,
-                                        _focus={
-                                            "border": f"2px solid {styles.ACCENT_COLOR}",
-                                        },
-                                        backdrop_filter="blur(10px)",
+                                    pc.form(
+                                        pc.input(
+                                            placeholder="查找文章",
+                                            on_change=NavbarState.set_search_input,
+                                            _focus={
+                                                "border": f"2px solid {styles.ACCENT_COLOR}",
+                                            },
+                                            backdrop_filter="blur(10px)",
+                                        ),
+                                        on_submit=NavbarState.change_search,
                                     ),
                                 ),
                             ),
@@ -350,13 +352,16 @@ def navbar(sidebar: pc.Component = get_sidebar()) -> pc.Component:
                             backdrop_filter="blur(10px)",
                             on_click=NavbarState.change_search,
                         ),
-                        pc.input(
-                            placeholder="查找文章",
-                            on_change=NavbarState.set_search_input,
-                            _focus={
-                                "border": f"2px solid {styles.ACCENT_COLOR}",
-                            },
-                            backdrop_filter="blur(10px)",
+                        pc.form(
+                            pc.input(
+                                placeholder="查找文章",
+                                on_change=NavbarState.set_search_input,
+                                _focus={
+                                    "border": f"2px solid {styles.ACCENT_COLOR}",
+                                },
+                                backdrop_filter="blur(10px)",
+                            ),
+                            on_submit=NavbarState.change_search,
                         ),
                     ),
                 ),
@@ -492,13 +497,16 @@ def navbar(sidebar: pc.Component = get_sidebar()) -> pc.Component:
                                         backdrop_filter="blur(10px)",
                                         on_click=NavbarState.change_search,
                                     ),
-                                    pc.input(
-                                        placeholder="查找文章",
-                                        on_change=NavbarState.set_search_input,
-                                        _focus={
-                                            "border": f"2px solid {styles.ACCENT_COLOR}",
-                                        },
-                                        backdrop_filter="blur(10px)",
+                                    pc.form(
+                                        pc.input(
+                                            placeholder="查找文章",
+                                            on_change=NavbarState.set_search_input,
+                                            _focus={
+                                                "border": f"2px solid {styles.ACCENT_COLOR}",
+                                            },
+                                            backdrop_filter="blur(10px)",
+                                        ),
+                                        on_submit=NavbarState.change_search,
                                     ),
                                 ),
                             ),
