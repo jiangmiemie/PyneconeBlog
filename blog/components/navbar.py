@@ -40,9 +40,9 @@ def format_search_results(result):
                 font_weight=400,
                 color=styles.DOC_REG_TEXT_COLOR,
             ),
-            on_click=NavbarState.change_search,
             href=result["document"]["href"],
         ),
+        on_click=NavbarState.change_search,
         border_radius="0.5em",
         width="100%",
         align_items="start",
@@ -126,23 +126,6 @@ def navbar_index(sidebar: pc.Component = get_sidebar()) -> pc.Component:
     return pc.box(
         pc.hstack(
             pc.hstack(
-                pc.button(
-                    pc.icon(tag="moon"),
-                    on_click=pc.toggle_color_mode,
-                ),
-                pc.link(
-                    pc.text(
-                        "欢迎回来",
-                        font_size=styles.H3_FONT_SIZE,
-                        font_weight=600,
-                    ),
-                    href=index.path,
-                    spacing="0.25em",
-                ),
-                _hover={"text_decoration": "none"},
-                spacing="1em",
-            ),
-            pc.hstack(
                 pc.desktop_only(
                     pc.hstack(
                         pc.link(
@@ -211,13 +194,6 @@ def navbar_index(sidebar: pc.Component = get_sidebar()) -> pc.Component:
                         ),
                     ),
                 ),
-                pc.link(
-                    pc.text(
-                        "开往",
-                    ),
-                    href="https://www.travellings.cn/go.html",
-                    **button_style,
-                ),
                 pc.mobile_and_tablet(
                     pc.icon(
                         tag="hamburger",
@@ -230,6 +206,21 @@ def navbar_index(sidebar: pc.Component = get_sidebar()) -> pc.Component:
                         },
                     ),
                 ),
+                spacing="1em",
+            ),
+            pc.hstack(
+                pc.link(
+                    pc.text(
+                        "开往",
+                    ),
+                    href="https://www.travellings.cn/go.html",
+                    **button_style,
+                ),
+                pc.button(
+                    pc.icon(tag="moon"),
+                    on_click=pc.toggle_color_mode,
+                ),
+                _hover={"text_decoration": "none"},
                 spacing="1em",
             ),
             pc.modal(
