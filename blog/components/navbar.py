@@ -223,32 +223,6 @@ def navbar_index(sidebar: pc.Component = get_sidebar()) -> pc.Component:
                 _hover={"text_decoration": "none"},
                 spacing="1em",
             ),
-            pc.modal(
-                pc.modal_overlay(
-                    pc.modal_content(
-                        pc.modal_body(
-                            pc.vstack(
-                                pc.vstack(
-                                    pc.foreach(
-                                        NavbarState.search_results,
-                                        format_search_results,
-                                    ),
-                                    spacing="0.5em",
-                                    width="100%",
-                                    max_height="30em",
-                                    align_items="start",
-                                    overflow="auto",
-                                ),
-                            ),
-                            opacity=0.8,
-                        ),
-                        opacity=0.1,
-                    )
-                ),
-                is_open=NavbarState.search_modal,
-                on_close=NavbarState.change_search,
-                padding="1em",
-            ),
             pc.drawer(
                 pc.drawer_overlay(
                     pc.drawer_content(
@@ -297,8 +271,36 @@ def navbar_index(sidebar: pc.Component = get_sidebar()) -> pc.Component:
                 position="fixed",
                 left="0px",
                 placement="left",
+                auto_focus=False,
+                block_scroll_on_mount=False,
                 is_open=NavbarState.sidebar_open,
                 on_close=NavbarState.toggle_sidebar,
+            ),
+            pc.modal(
+                pc.modal_overlay(
+                    pc.modal_content(
+                        pc.modal_body(
+                            pc.vstack(
+                                pc.vstack(
+                                    pc.foreach(
+                                        NavbarState.search_results,
+                                        format_search_results,
+                                    ),
+                                    spacing="0.5em",
+                                    width="100%",
+                                    max_height="30em",
+                                    align_items="start",
+                                    overflow="auto",
+                                ),
+                            ),
+                            opacity=0.8,
+                        ),
+                        opacity=0.1,
+                    )
+                ),
+                is_open=NavbarState.search_modal,
+                on_close=NavbarState.change_search,
+                padding="1em",
             ),
             justify="space-between",
             padding_x=styles.PADDING_X,
@@ -521,6 +523,8 @@ def navbar(sidebar: pc.Component = get_sidebar()) -> pc.Component:
                 position="fixed",
                 left="0px",
                 placement="left",
+                auto_focus=False,
+                block_scroll_on_mount=False,
                 is_open=NavbarState.sidebar_open,
                 on_close=NavbarState.toggle_sidebar,
             ),
