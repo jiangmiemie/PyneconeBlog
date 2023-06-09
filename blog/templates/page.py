@@ -233,11 +233,11 @@ def webpage(path: str, title: str = constants.DEFAULT_TITLE, props=None) -> Call
             """
             # Import here to avoid circular imports.
             from blog.components.footer import footer
-            from blog.components.navbar import navbar_index
+            from blog.components.navbar import navbar
 
             # Wrap the component in the template.
             return pc.box(
-                navbar_index(),
+                navbar(True),
                 contents(*children, **props),
                 footer(),
                 font_family="Inter",

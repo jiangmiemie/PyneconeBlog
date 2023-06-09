@@ -61,7 +61,6 @@ def footer(style=footer_style):
                         pc.text("支付宝"),
                     ),
                     pc.popover_content(pc.popover_body(pc.image(src="/Alipay.jpg"))),
-                    trigger="hover",
                 ),
                 align_items="start",
             ),

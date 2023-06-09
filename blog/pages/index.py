@@ -94,29 +94,16 @@ def index() -> pc.Component:
                         text_align="center",
                     ),
                     pc.container(
-                        pc.hstack(
-                            pc.input_group(
-                                pc.input_left_addon(
-                                    pc.icon(
-                                        tag="search",
-                                        color=styles.DOC_REG_TEXT_COLOR,
-                                    ),
-                                    bg="rgba(255,255,255, 0.8)",
-                                    backdrop_filter="blur(10px)",
-                                    on_click=NavbarState.change_search,
-                                ),
-                                pc.form(
-                                    pc.input(
-                                        placeholder="查找文章",
-                                        on_change=NavbarState.set_search_input,
-                                        _focus={
-                                            "border": f"2px solid {styles.ACCENT_COLOR}",
-                                        },
-                                        backdrop_filter="blur(10px)",
-                                    ),
-                                    on_submit=NavbarState.change_search,
-                                ),
+                        pc.form(
+                            pc.input(
+                                placeholder="查找文章",
+                                on_change=NavbarState.set_search_input,
+                                _focus={
+                                    "border": f"2px solid {styles.ACCENT_COLOR}",
+                                },
+                                backdrop_filter="blur(10px)",
                             ),
+                            on_submit=NavbarState.change_search,
                         ),
                     ),
                     justify="space-evenly",
