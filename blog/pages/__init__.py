@@ -2,7 +2,6 @@ from .index import index
 from .project import project
 from .gallery import gallery
 from .month import month
-from .read import read
 from .code import code
 from blog import tsclient
 from blog.route import Route

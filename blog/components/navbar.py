@@ -83,13 +83,6 @@ def get_sidebar(align, index=False):
         ),
         pc.link(
             pc.text(
-                "读书",
-            ),
-            href="/read",
-            **button_style,
-        ),
-        pc.link(
-            pc.text(
                 "编程",
             ),
             href="/code",

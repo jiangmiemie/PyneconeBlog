@@ -4,7 +4,7 @@ import pynecone as pc
 from blog import styles
 from blog import constants
 from blog.route import Route, get_path
-
+from blog import tsclient
 
 link_style = {
     "color": styles.LIGHT_TEXT_COLOR,
@@ -12,6 +12,35 @@ link_style = {
     "_hover": {"color": styles.ACCENT_COLOR},
     "fontSize": "1.2em",
 }
+
+
+def component_grid(tag):
+    sidebar = []
+    pagelists = tsclient.check_data_by_tag(tag)
+    for pagelist in pagelists:
+        sidebar.insert(
+            0,
+            pc.link(
+                pc.box(
+                    pc.heading(pagelist.title, style={"fontSize": "1.2em"}),
+                    align_items="center",
+                    box_shadow="lg",
+                    padding="1em",
+                    _hover={
+                        "box_shadow": "rgba(38, 57, 77, .3) 0px 20px 30px -10px",
+                    },
+                    background_image="{}.svg".format(tag),
+                    background_repeat="no-repeat",
+                    background_position="right bottom",
+                    background_size="6em",
+                ),
+                href=pagelist.path,
+            ),
+        )
+    return pc.box(
+        pc.responsive_grid(*sidebar, columns=[2, None, 5], spacing="1em"),
+        width="100%",
+    )
 
 
 def docheader(
@@ -55,15 +84,6 @@ def docheader(
 
 
 def doctext(*text, **props) -> pc.Component:
-    """Create a documentation paragraph.
-
-    Args:
-        text: The text components to display.
-        props: Props to apply to the paragraph.
-
-    Returns:
-        The styled paragraph.
-    """
     return pc.box(
         *text,
         margin_bottom="1em",
@@ -80,7 +100,6 @@ def imgpage(set_path: str | None = None, t: str | None = None) -> pc.Component:
         else:
             path = set_path
 
-        # Set the page title.
         if t is None:
             title = f"{contents.__name__.replace('_', ' ').title()} | Islands"
         else:
@@ -100,13 +119,12 @@ def imgpage(set_path: str | None = None, t: str | None = None) -> pc.Component:
                 pc.box(
                     pc.flex(
                         pc.vstack(
-                            pc.box(comp),
+                            comp,
                             padding_left=["1em", "2em", "5em", "8em"],
                             padding_right=styles.PADDING_X,
                             width=["100%", "100%", "100%", "100%"],
                             padding_top="2em",
                         ),
-                        max_width="80em",
                         margin_x="auto",
                         margin_top="1em",
                     ),
@@ -115,7 +133,6 @@ def imgpage(set_path: str | None = None, t: str | None = None) -> pc.Component:
                 ),
             )
 
-        # Return the route.
         return Route(
             path=path,
             title=title,
@@ -165,7 +182,7 @@ def mdpage(text: str, path: str, title: str, time: str, *args, **kwargs):
 
     return pc.box(
         navbar(),
-        pc.box(
+        pc.center(
             pc.box(id="contentslist"),
             pc.flex(
                 pc.vstack(
@@ -179,27 +196,28 @@ def mdpage(text: str, path: str, title: str, time: str, *args, **kwargs):
                             pc.alert_icon(),
                             pc.alert_title(
                                 pc.markdown(
-                                    "版权声明 © : 采用 [**知识共享署名4.0**](https://creativecommons.org/licenses/by/4.0/legalcode) 国际许可协议进行许可 , 转载请注明出处！"
+                                    "版权声明 © : 采用 [**知识共享署名4.0**](https://creativecommons.org/licenses/by/4.0/legalcode) 国际许可协议进行许可 , 转载请注明来源 https://www.jiangmiemie.com/"
                                 )
                             ),
                             status="info",
                         ),
                         id="contents",
+                        text_align="left",
                     ),
                     pc.flex(
                         *links,
                         justify="space-between",
                         width="100%",
-                        padding_top="1em",
+                        padding_top="0.5em",
                         padding_bottom="1em",
                     ),
                 ),
-                padding_left=["1em", "2em", "5em", "8em"],
-                padding_right=styles.PADDING_X,
-                width=["100%", "100%", "100%", "95%"],
-                padding_top="2em",
+                padding_x="2em",
+                border="5px  #555",
+                box_shadow="lg",
+                width=["100%", "100%", "100%", "80%"],
+                padding_top="1em",
             ),
-            max_width="80em",
             margin_x="auto",
             margin_top="1em",
         ),
@@ -212,30 +230,10 @@ def webpage(path: str, title: str = constants.DEFAULT_TITLE, props=None) -> Call
     props = props or {}
 
     def webpage(contents: Callable[[], Route]) -> Route:
-        """Wrapper to create a templated route.
-
-        Args:
-            contents: The function to create the page route.
-
-        Returns:
-            The templated route.
-        """
-
         def wrapper(*children, **props) -> pc.Component:
-            """The template component.
-
-            Args:
-                children: The children components.
-                props: The props to apply to the component.
-
-            Returns:
-                The component with the template applied.
-            """
-            # Import here to avoid circular imports.
             from blog.components.footer import footer
             from blog.components.navbar import navbar
 
-            # Wrap the component in the template.
             return pc.box(
                 navbar(True),
                 contents(*children, **props),

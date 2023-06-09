@@ -44,8 +44,7 @@ def index() -> pc.Component:
                 pc.container(
                     pc.vstack(
                         pc.text(
-                            "更新计划",
-                            font_size=styles.H3_FONT_SIZE,
+                            "更新计划", font_size=styles.H3_FONT_SIZE, font_weight="bold"
                         ),
                         pc.hstack(
                             pc.checkbox("黑夜", is_checked=True),
@@ -74,7 +73,16 @@ def index() -> pc.Component:
                             ),
                         ),
                     ),
+                    padding_x="2em",
+                    border_radius="25px ",
+                    border="5px  #555",
+                    box_shadow="lg",
                     center_content=True,
+                    padding_bottom="1em",
+                    background_image="code.svg",
+                    background_repeat="no-repeat",
+                    background_position="right bottom",
+                    background_size="6em",
                 ),
             ),
             pc.center(
@@ -112,7 +120,7 @@ def index() -> pc.Component:
             ),
             justify="space-evenly",
         ),
-        padding_y="10em",
+        padding_y="12em",
         width="100%",
         background_image="/grid.png",
         background_repeat="no-repeat",

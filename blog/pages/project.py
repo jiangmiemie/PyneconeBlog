@@ -140,25 +140,16 @@ def component_grid():
                 },
             )
         )
-    return pc.box(
-        pc.responsive_grid(*sidebar, columns=[1, 2, 2, 3, 4], gap=4),
-    )
+    return pc.box(pc.responsive_grid(*sidebar, columns=[1, 2, 2, 4, 5]))
 
 
 @imgpage()
 def project():
-    return pc.flex(
-        pc.hstack(
-            pc.box(
-                docheader("Project", first=True),
-                doctext("Here are some examples of my projects "),
-                pc.divider(),
-                component_grid(),
-                text_align="left",
-            ),
-            align_items="start",
-        ),
-        flex_direction="column",
-        height="100%",
+    return pc.box(
+        docheader("项目", first=True),
+        doctext("记录一些自己做的项目"),
+        pc.divider(),
+        component_grid(),
+        text_align="left",
         margin_bottom="4em",
     )

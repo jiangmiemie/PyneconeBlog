@@ -9,7 +9,7 @@ footer_item_style = {
 
 footer_style = {
     "box_shadow": "medium-lg",
-    "border_top": "0.2em solid #F0F0F0",
+    "border_top": "0.05em solid rgba(100, 116, 139, .2)",
     "vertical_align": "bottom",
     "padding_top": "1em",
     "padding_bottom": "1em",
@@ -21,63 +21,35 @@ def footer(style=footer_style):
     return pc.box(
         pc.hstack(
             pc.vstack(
-                pc.text("联系我", font_size=styles.H4_FONT_SIZE, font_weight=800),
                 pc.link(
-                    "GitHub",
+                    pc.span("CC BY-NC-SA 4.0", font_weight="bold"),
+                    href="https://creativecommons.org/licenses/by-nc-sa/4.0/",
+                ),
+                pc.span(" 2021 年至今 © jiangmiemie"),
+                align_items="left",
+            ),
+            pc.hstack(
+                pc.link(
+                    pc.image(
+                        src="/github.png",
+                        width="40px",
+                        height="auto",
+                    ),
                     href=constants.GITHUB_URL,
                     style=footer_item_style,
                 ),
                 pc.link(
-                    "Email",
-                    href=constants.CONTACT_URL,
-                    style=footer_item_style,
-                ),
-                align_items="start",
-            ),
-            pc.vstack(
-                pc.text("鸣谢", font_size=styles.H4_FONT_SIZE, font_weight=800),
-                pc.link(
-                    "Pynecone",
-                    href="https://pynecone.io/",
-                    style=footer_item_style,
-                ),
-                pc.link(
-                    "React",
-                    href="https://react.dev/",
-                    style=footer_item_style,
-                ),
-                align_items="start",
-            ),
-            pc.vstack(
-                pc.text("支持我", font_size=styles.H4_FONT_SIZE, font_weight=800),
-                pc.popover(
-                    pc.popover_trigger(
-                        pc.text("微信"),
+                    pc.image(
+                        src="/discord.png",
+                        width="40px",
+                        height="auto",
                     ),
-                    pc.popover_content(pc.popover_body(pc.image(src="/wepay.jpg"))),
+                    href="https://discordapp.com/users/jiangyangcreate#0902",
+                    style=footer_item_style,
                 ),
-                pc.popover(
-                    pc.popover_trigger(
-                        pc.text("支付宝"),
-                    ),
-                    pc.popover_content(pc.popover_body(pc.image(src="/Alipay.jpg"))),
-                ),
-                align_items="start",
+                spacing="2em",
             ),
             justify="space-between",
-            color=styles.LIGHT_TEXT_COLOR,
-            align_items="top",
-            padding_bottom="1em",
-            min_width="100%",
-        ),
-        pc.box(
-            frameborder="no",
-            border="0",
-            marginwidth="0",
-            marginheight="0",
-            width="100%",
-            src=constants.MUSIC_URL,
-            element="iframe",
         ),
         **style,
     )
