@@ -130,8 +130,6 @@ def component_grid():
                     align_items="left",
                 ),
                 align_items="left",
-                row_span=3,
-                col_span=1,
                 box_shadow="lg",
                 border_radius="1em",
                 padding="1em",
@@ -140,7 +138,7 @@ def component_grid():
                 },
             )
         )
-    return pc.box(pc.responsive_grid(*sidebar, columns=[1, 2, 2, 4, 5]))
+    return pc.box(pc.responsive_grid(*sidebar, columns=[1, None, 5], spacing="1em"))
 
 
 @imgpage()

@@ -32,7 +32,7 @@ def component_grid(tag):
                     background_image="{}.svg".format(tag),
                     background_repeat="no-repeat",
                     background_position="right bottom",
-                    background_size="6em",
+                    background_size="4em",
                 ),
                 href=pagelist.path,
             ),

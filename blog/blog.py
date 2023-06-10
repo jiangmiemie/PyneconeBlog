@@ -4,6 +4,7 @@ from blog.base_state import State
 from blog.pages import routes
 from blog.middleware import CloseSidebarMiddleware
 from blog.components.scripts import scripts
+from blog.constants import MAIN_URL
 
 # Create the app.
 app = pc.App(
@@ -30,6 +31,21 @@ for route in routes:
         ],
     )
 
+
+app.add_custom_404_page(
+    pc.center(
+        pc.link(
+            pc.vstack(
+                pc.text("没有找到你要的内容", font_size=styles.H1_FONT_SIZE, font_weight="bold"),
+                pc.text("不妨回主页看看", font_size=styles.H3_FONT_SIZE, font_weight="bold"),
+            ),
+            href=MAIN_URL,
+        ),
+        padding_y="3em",
+    ),
+    title=404,
+    description="Sorry , it not a open url",
+)
 # Add the middleware.
 app.add_middleware(CloseSidebarMiddleware(), index=0)
 
