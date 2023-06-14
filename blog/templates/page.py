@@ -148,9 +148,7 @@ def mdpage(text: str, path: str, title: str, time: str, *args, **kwargs):
     from blog.components.sidebar import get_prev_next
 
     prev, next = get_prev_next(path)
-
     links = []
-
     if prev:
         links.append(
             pc.link(
@@ -183,9 +181,9 @@ def mdpage(text: str, path: str, title: str, time: str, *args, **kwargs):
     return pc.box(
         navbar(),
         pc.center(
-            pc.box(id="contentslist"),
             pc.flex(
                 pc.vstack(
+                    pc.box(id="contentslist"),
                     pc.box(
                         comp,
                         pc.divider(),

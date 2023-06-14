@@ -9,6 +9,7 @@ config = pc.Config(
     frontend_packages=[
         "react-colorful",
         "react-confetti",
+        "react-loading-icons",
     ],
     db_config=pc.DBConfig.sqlite(database="pynecone.db"),
 )

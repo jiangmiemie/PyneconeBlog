@@ -1,5 +1,3 @@
-"""App styling."""
-
 import pynecone as pc
 
 # General styles.

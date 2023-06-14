@@ -88,28 +88,43 @@ def get_sidebar(align, index=False):
             href="/code",
             **button_style,
         ),
-        pc.link(
-            pc.text(
-                "原则",
-                _focus={},
+        pc.popover(
+            pc.popover_trigger(pc.text("其他")),
+            pc.popover_content(
+                align(
+                    pc.link(
+                        pc.text(
+                            "原则",
+                            _focus={},
+                        ),
+                        **button_style,
+                        href="/principle",
+                    ),
+                    pc.link(
+                        pc.text(
+                            "项目",
+                        ),
+                        **button_style,
+                        href="/project",
+                    ),
+                    pc.link(
+                        pc.text(
+                            "GPT",
+                        ),
+                        **button_style,
+                        href="/openai",
+                    ),
+                    pc.link(
+                        pc.text(
+                            "云盘",
+                            _focus={},
+                        ),
+                        **button_style,
+                        href=constants.SPACE_URL,
+                    ),
+                    justify="space-evenly",
+                )
             ),
-            **button_style,
-            href="/principle",
-        ),
-        pc.link(
-            pc.text(
-                "项目",
-            ),
-            **button_style,
-            href="/project",
-        ),
-        pc.link(
-            pc.text(
-                "云盘",
-                _focus={},
-            ),
-            **button_style,
-            href=constants.SPACE_URL,
         ),
         index_links if index == False else pc.box(),
     )

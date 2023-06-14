@@ -1,8 +1,12 @@
 .web
 .vscode
 .assets
+data
 **/*.pyc
 **/.DS_Store
 **/*.swp
 **.web
 **__pycache__
+__pycache__/
+table.py
+pynecone.db

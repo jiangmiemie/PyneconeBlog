@@ -55,19 +55,11 @@ def index() -> pc.Component:
                         ),
                         pc.hstack(
                             pc.checkbox("首页", is_checked=True),
-                            pc.checkbox("关于", is_checked=True),
+                            pc.checkbox("文章", is_checked=True),
                             pc.checkbox("相册", is_checked=True),
-                            pc.checkbox("月记", is_checked=True),
-                            pc.checkbox("编程", is_checked=True),
-                        ),
-                        pc.hstack(
+                            pc.checkbox("智能", is_checked=True),
                             pc.checkbox(
                                 "目录",
-                                on_change=IndexState.start_confetti,
-                                is_checked=IndexState.show_confetti,
-                            ),
-                            pc.checkbox(
-                                "GPT",
                                 on_change=IndexState.start_confetti,
                                 is_checked=IndexState.show_confetti,
                             ),

@@ -137,39 +137,36 @@ function clickEffect() {
   }
 }
 clickEffect();//call effect function
-
-
-</script>
-"""
-"""
 function generateCatalog() {
-  let articleContent = document.getElementById('contents');
-  let catalogData = [];
-  let header = {};
-  let elements = articleContent.childNodes;
-  for (let i = 0; i < elements.length; i++) {
-      if (elements[i].nodeName === 'H2') {
-          elements[i].id = 'h2-' + catalogData.length;
-          header = {
-              name: elements[i].innerText,
-              childHeaders: []
-          };
-          catalogData.push(header);
-      }
-  }
-    
-  let catalog = '<div >文章目录</div>';
-  for (let i = 0; i < catalogData.length; i++) {
-      let target = '#h2-' + i; 
-      let index = (i + 1) + '. '; 
-      let name = catalogData[i].name;
-      catalog += '<a href=' + target + '>' + index + name + '</a><br/>';
-  }
-  return catalog;
+    let articleContent = document.getElementById('contents');
+    let catalogData = [];
+    let header = {};
+    let elements = articleContent.childNodes;
+    for (let i = 0; i < elements.length; i++) {
+        if (elements[i].nodeName === 'H2') {
+            elements[i].id = 'h2-' + catalogData.length;
+            header = {
+                name: elements[i].innerText,
+                childHeaders: []
+            };
+            catalogData.push(header);
+        }
+    }
+
+    let catalog = '';
+    for (let i = 0; i < catalogData.length; i++) {
+        let target = '#h2-' + i;
+        let index = (i + 1) + '. ';
+        let name = catalogData[i].name;
+        catalog += '<a href='+target+'>'+index+name+'</a><br/>';
+    }
+    return catalog;
 }
 
 let wrapper = document.getElementById('contentslist');
 wrapper.innerHTML = generateCatalog();
+
+</script>
 """
 
 
