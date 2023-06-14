@@ -1,8 +1,9 @@
 import pynecone as pc
 import openai
+from blog.key import openaikey
 from blog.base_state import State as BS
 
-openai.api_key = "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"
+openai.api_key = openaikey
 
 
 shadow_light = "rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;"
