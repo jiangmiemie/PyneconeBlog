@@ -1,7 +1,6 @@
 import pynecone as pc
 from blog import constants, styles
 from blog.base_state import State
-from blog.pages.index import index
 from blog.tsclient import client
 
 

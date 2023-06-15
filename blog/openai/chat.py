@@ -101,7 +101,7 @@ class State(BS):
         session = openai.Completion.create(
             engine="text-davinci-003",
             prompt=self.question,
-            max_tokens=200,
+            max_tokens=3200,
             n=1,
             stop=None,
             temperature=0.7,

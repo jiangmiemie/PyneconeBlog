@@ -1,2 +1,4 @@
 pynecone>=0.1.33
 openai
+pandas
+openpyxl
