@@ -120,8 +120,8 @@ class State(BS):
 def message(qa: QA) -> pc.Component:
     return pc.box(
         pc.box(
-            pc.text(
-                qa.question,
+            pc.box(
+                pc.markdown(qa.question),
                 bg="#fff3",
                 shadow=shadow_light,
                 **message_style,
@@ -130,8 +130,8 @@ def message(qa: QA) -> pc.Component:
             margin_top="1em",
         ),
         pc.box(
-            pc.text(
-                qa.answer,
+            pc.box(
+                pc.markdown(qa.answer),
                 color="white",
                 bg="#5535d4",
                 shadow=shadow_light,
