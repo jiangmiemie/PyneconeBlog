@@ -6,7 +6,7 @@ from blog.middleware import CloseSidebarMiddleware
 from blog.components.scripts import *
 from blog.constants import MAIN_URL
 from blog.datas.datas import *
-from blog.openai import openai
+from blog.openai.openai import chatgpt, dalle
 
 
 # Create the app.
@@ -34,22 +34,8 @@ for route in routes:
         ],
     )
 
-app.add_page(openai.openai(), route="openai", title="Openai", image="openai.png")
-
-app.add_custom_404_page(
-    pc.center(
-        pc.link(
-            pc.vstack(
-                pc.text("没有找到你要的内容", font_size=styles.H1_FONT_SIZE, font_weight="bold"),
-                pc.text("不妨回主页看看", font_size=styles.H3_FONT_SIZE, font_weight="bold"),
-            ),
-            href=MAIN_URL,
-        ),
-        padding_y="3em",
-    ),
-    title=404,
-    description="Sorry , it not a open url",
-)
+app.add_page(chatgpt(), route="chat", title="Openai", image="openai.png")
+app.add_page(dalle(), route="dalle", title="Openai", image="openai.png")
 
 # Add the middleware.
 app.add_middleware(CloseSidebarMiddleware(), index=0)

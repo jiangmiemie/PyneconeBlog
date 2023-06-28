@@ -1,5 +1,8 @@
 import pynecone as pc
-from blog.constants import MAIN_URL, TEST
+import psycopg2
+from configparser import ConfigParser
+
+from blog.constants import MAIN_URL
 
 
 class Pagelist(pc.Model, table=True):
@@ -10,42 +13,66 @@ class Pagelist(pc.Model, table=True):
     contents: str
 
 
-def add_data(p):
-    if TEST:
-        return []
-    with pc.session() as session:
-        if not check_data_by_path(p.path):
-            session.add(p)
-            session.commit()
-        else:
-            pass
+def config(filename="database.ini", section="postgresql"):
+    parser = ConfigParser()
+    parser.read(filename)
+    db = {}
+    if parser.has_section(section):
+        params = parser.items(section)
+        for param in params:
+            db[param[0]] = param[1]
+    else:
+        raise Exception(
+            "Section {0} not found in the {1} file".format(section, filename)
+        )
+
+    return db
 
 
-def check_data():
-    if TEST:
-        return []
-    with pc.session() as session:
-        pagelists = session.query(Pagelist).filter(Pagelist.path != None)
-    return pagelists
+def updata_data(sql):
+    """
+    插入2条数据， RUN 表示状态为正常，大小写敏感，如果插入数据有单引号如： jack's blog 需要改成 jack''s blog(变成2个单引号)
+    INSERT INTO reflexblog ("indexs", "status", "name", "link") VALUES ('99998', 'RUN', '开往', 'https://github.com/travellings-link/travellings');
+    INSERT INTO reflexblog ("indexs", "status", "name", "link") VALUES ('99999', 'RUN', '开往', 'https://github.com/travellings-link/travellings');
+
+    修改示例 2，更新indexs值为99998的数据，设置它的状态值为'LOST'
+    test3 = "UPDATE reflexblog SET status = 'LOST' WHERE indexs=99998"
+    """
+    conn = None
+    try:
+        params = config()
+        conn = psycopg2.connect(**params)
+        cur = conn.cursor()
+        cur.execute(sql)
+        conn.commit()
+        cur.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        pass
+    finally:
+        if conn is not None:
+            conn.close()
 
 
-def check_data_by_tag(tag):
-    if TEST:
-        return []
-    with pc.session() as session:
-        pagelists = session.query(Pagelist).filter(Pagelist.tag == tag)
-    return pagelists
-
-
-def check_data_by_path(path):
-    if TEST:
-        return []
-    p = []
-    with pc.session() as session:
-        pagelists = session.query(Pagelist).filter(Pagelist.path == path)
-    for i in pagelists:
-        p.append(i)
-    return p
+def check_data(sql="SELECT * FROM reflexblog WHERE indexs<1000"):
+    """
+    查询示例， 查询indexs为'99998'的数据
+    test4 = "SELECT * FROM reflexblog WHERE indexs=99998"
+    """
+    conn = None
+    try:
+        params = config()
+        conn = psycopg2.connect(**params)
+        cur = conn.cursor()
+        cur.execute(sql)
+        db_version = cur.fetchall()
+        conn.commit()
+        cur.close()
+        return db_version
+    except (Exception, psycopg2.DatabaseError) as error:
+        pass
+    finally:
+        if conn is not None:
+            conn.close()
 
 
 def split_page(page: str, text: str, mode: int):

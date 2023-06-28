@@ -1,6 +1,4 @@
 DEFAULT_TITLE = "Island"
-TEST = False
-LOCAL = True
 MAIN_URL = "https://jiangmiemie.com"
 BACKEND_URL = "https://pyneconebackend.jiangmiemie.com"
 SPACE_URL = "https://space.jiangmiemie.com/"

@@ -1,0 +1,67 @@
+/* spacing */
+table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+td,
+th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+    color: black;
+}
+
+tr:hover {
+    background-color: #ddd;
+}
+
+th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #04AA6D;
+    color: white;
+}
+
+p {
+    line-height: 2;
+}
+
+div:has(pre) {
+    width: 100%;
+}
+
+pre {
+    width: 100%;
+    overflow: auto;
+
+}
+
+li {
+    margin: .5em 0 !important;
+}
+
+h1 {
+    font-size: 1.25rem !important;
+}
+
+h2 {
+    font-size: 1.1rem !important;
+}
+
+h3 {
+    font-size: 1rem !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    line-height: 3 !important;
+}
