@@ -34,8 +34,32 @@ for route in routes:
         ],
     )
 
-app.add_page(chatgpt(), route="chat", title="Openai", image="openai.png")
-app.add_page(dalle(), route="dalle", title="Openai", image="openai.png")
+app.add_page(
+    chatgpt(),
+    "chat",
+    "Openai",
+    description="永远怀着一颗学徒的心",
+    meta=[
+        {
+            "http_equiv": "Content-Security-Policy",
+            "content": "upgrade-insecure-requests",
+        },
+    ],
+    image="logo.png",
+)
+app.add_page(
+    dalle(),
+    "dalle",
+    "Openai",
+    description="永远怀着一颗学徒的心",
+    meta=[
+        {
+            "http_equiv": "Content-Security-Policy",
+            "content": "upgrade-insecure-requests",
+        },
+    ],
+    image="logo.png",
+)
 
 # Add the middleware.
 app.add_middleware(CloseSidebarMiddleware(), index=0)

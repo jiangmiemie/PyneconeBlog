@@ -28,21 +28,26 @@ https://www.jiangmiemie.com
 
 ## Use
 
-### Local
-
+### install
 `pip install -r requirements.txt`
 
-if`AttributeError: module 'httpcore' has no attribute 'SyncHTTPTransport`Please`pip install googletrans==4.0.0-rc1`or`pip install googletrans`
 
-
-`pc init`
-`pc run`
-
-enjoy it 
-
-### Deploy
+### chechk
 
 check the  `pcconfig.py` and change  `backend` to your backend(port or url)
+
+
+### NEW db
+
+create a pgsql and add  database.ini  , like this :
+
+[postgresql]
+host=localhost
+database=reflexblog
+user=reflexblog
+password=***your password***
+
+### RUN
 
 than `bash run.sh`
 

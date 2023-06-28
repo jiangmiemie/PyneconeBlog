@@ -28,21 +28,26 @@ https://www.jiangmiemie.com
 
 ## 使用
 
-### 本地
-
-`pip install -r requirements.txt`.
-
-if`AttributeError: module 'httpcore' has no attribute 'SyncHTTPTransport`Please`pip install googletrans==4.0.0-rc1`or`pip install googletrans`。
+### 下载
+`pip install -r requirements.txt`
 
 
-`pc init`。
-`pc run`。
+### 检查
 
-享受它 
+check the  `pcconfig.py` and change  `backend` to your backend(port or url)
 
-###部署
 
-检查`pcconfig.py`并将`backend`改为你的后台(端口或网址)
+### 新建
+create a pgsql and add  database.ini  , like this :
 
-之后`bash run.sh`。
+[postgresql]
+host=localhost
+database=reflexblog
+user=reflexblog
+password=***your password***
+
+### 运行
+
+than `bash run.sh`
+
 
