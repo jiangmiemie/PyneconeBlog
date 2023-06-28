@@ -16,13 +16,13 @@ link_style = {
 
 def component_grid(tag):
     sidebar = []
-    pagelists = tsclient.check_data(sql=f"SELECT * FROM reflexblog WHERE tag={tag}")
+    pagelists = tsclient.check_data(sql=f"SELECT * FROM reflexblog WHERE tag='{tag}'")
     for pagelist in pagelists:
         sidebar.insert(
             0,
             pc.link(
                 pc.box(
-                    pc.heading(pagelist.title, style={"fontSize": "1.2em"}),
+                    pc.heading(pagelist[2], style={"fontSize": "1.2em"}),
                     align_items="center",
                     box_shadow="lg",
                     padding="1em",
@@ -34,7 +34,7 @@ def component_grid(tag):
                     background_position="right bottom",
                     background_size="4em",
                 ),
-                href=pagelist.path,
+                href=pagelist[1],
             ),
         )
     return pc.box(

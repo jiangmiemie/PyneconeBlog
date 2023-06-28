@@ -1,20 +1,22 @@
 import os
 import pynecone as pc
-from blog.tsclient import Pagelist, updata_data
+from blog.tsclient import Pagelist, updata_data, init_db
 
 FILE_DIR = os.path.join("assets", "pages")
 
 
 def read_md():
     flat_items = []
+    index = 0
+    init_db()
     for root, dirs, files in os.walk(FILE_DIR, topdown=False):
         for name in files:
             if ".png" in name:
                 continue
-            tag = root.replace(FILE_DIR, "").replace("\\", "")
+            tag = root.replace(FILE_DIR, "").replace("\\", "").replace("/", "")
             file_path = os.path.join(root, name)
             with open(file_path) as f:
-                contents = f.read()
+                contents = f.read().replace("'", "''")
             filename = name.replace(".md", "")
             time = int(filename[:6])
             title = filename[6:]
@@ -32,28 +34,18 @@ def read_md():
                 .replace("'", "")
             )
 
-            p = Pagelist(
-                path=path,
-                tag=tag,
-                title=title,
-                time=time,
-                contents=contents,
+            updata_data(
+                """INSERT INTO reflexblog ("index","path", "tag", "title","time", "contents") VALUES ('{}','{}','{}','{}','{}','{}');""".format(
+                    index,
+                    path,
+                    tag,
+                    title,
+                    time,
+                    contents,
+                )
             )
-            flat_items.append(p)
-
+            index += 1
     return flat_items
 
 
-flat_items = read_md()
-
-
-def get_prev_next(url):
-    for i, item in enumerate(flat_items):
-        if item.path == url:
-            if i == 0 and len(flat_items) > 1:
-                return None, flat_items[i + 1]
-            elif i == len(flat_items) - 1:
-                return flat_items[i - 1], None
-            else:
-                return flat_items[i - 1], flat_items[i + 1]
-    return None, None
+read_md()

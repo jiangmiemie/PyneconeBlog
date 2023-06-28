@@ -1,7 +1,7 @@
 import pynecone as pc
 import psycopg2
 from configparser import ConfigParser
-
+from collections.abc import Iterable
 from blog.constants import MAIN_URL
 
 
@@ -29,6 +29,21 @@ def config(filename="database.ini", section="postgresql"):
     return db
 
 
+def init_db():
+    updata_data("""DROP TABLE reflexblog""")
+
+    updata_data(
+        """CREATE TABLE "reflexblog" (
+    "index"	INT,
+    "path"	VARCHAR(512),
+    "title"	VARCHAR(512),
+    "tag"	VARCHAR(512),
+    "time"	VARCHAR(512),
+    "contents"	text
+);"""
+    )
+
+
 def updata_data(sql):
     """
     插入2条数据， RUN 表示状态为正常，大小写敏感，如果插入数据有单引号如： jack's blog 需要改成 jack''s blog(变成2个单引号)
@@ -47,13 +62,14 @@ def updata_data(sql):
         conn.commit()
         cur.close()
     except (Exception, psycopg2.DatabaseError) as error:
-        pass
+        print(error)
+        return []
     finally:
         if conn is not None:
             conn.close()
 
 
-def check_data(sql="SELECT * FROM reflexblog WHERE indexs<1000"):
+def check_data(sql="SELECT * FROM reflexblog WHERE index<1000"):
     """
     查询示例， 查询indexs为'99998'的数据
     test4 = "SELECT * FROM reflexblog WHERE indexs=99998"
@@ -64,12 +80,16 @@ def check_data(sql="SELECT * FROM reflexblog WHERE indexs<1000"):
         conn = psycopg2.connect(**params)
         cur = conn.cursor()
         cur.execute(sql)
-        db_version = cur.fetchall()
+        db = cur.fetchall()
         conn.commit()
         cur.close()
-        return db_version
+
+        if isinstance(db, Iterable):
+            return db
+        return []
     except (Exception, psycopg2.DatabaseError) as error:
-        pass
+        print(error)
+        return []
     finally:
         if conn is not None:
             conn.close()
@@ -107,14 +127,14 @@ def get_search(search_parameters):
     pagelists = check_data()
 
     for pagelist in pagelists:
-        head = pagelist.title
-        page = pagelist.contents
+        head = pagelist[2]
+        page = pagelist[5]
         if search_parameters in head:
             search = {
                 "document": {
                     "heading": head,
                     "description": split_page(page, search_parameters, mode=1),
-                    "href": pagelist.path,
+                    "href": pagelist[1],
                 }
             }
             info.append(search)
@@ -123,7 +143,7 @@ def get_search(search_parameters):
                 "document": {
                     "heading": head,
                     "description": split_page(page, search_parameters, mode=2),
-                    "href": pagelist.path,
+                    "href": pagelist[1],
                 }
             }
             info.append(search)

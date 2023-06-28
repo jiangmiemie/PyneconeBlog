@@ -9,13 +9,12 @@ from blog.templates.page import mdpage
 
 routes = [r for r in locals().values() if isinstance(r, Route)]
 
+
 for pagelist in tsclient.check_data():
     routes.append(
         Route(
-            path=pagelist.path,
-            title=pagelist.title,
-            component=mdpage(
-                pagelist.contents, pagelist.path, pagelist.title, pagelist.time
-            ),
+            path=pagelist[1],
+            title=pagelist[2],
+            component=mdpage(pagelist[5], pagelist[1], pagelist[2], pagelist[4]),
         )
     )
