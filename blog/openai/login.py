@@ -54,7 +54,6 @@ def login():
                     _hover={"bg": "blue.600"},
                 ),
                 align_items="left",
-                bg="white",
                 border="1px solid #eaeaea",
                 p=4,
                 max_width="400px",

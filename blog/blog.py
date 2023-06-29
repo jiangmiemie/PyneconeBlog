@@ -34,9 +34,6 @@ for route in routes:
         ],
     )
 for route in openairoutes:
-    print(
-        route.path,
-    )
     app.add_page(
         route.component,
         route.path,

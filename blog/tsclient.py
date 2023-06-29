@@ -6,11 +6,12 @@ from blog.constants import MAIN_URL
 
 
 class Pagelist:
-    path: str
-    tag: str
-    time: int
-    title: str
-    contents: str
+    def __init__(self, path, tag, time, title, contents) -> None:
+        self.path = path
+        self.tag = tag
+        self.time = time
+        self.title = title
+        self.contents = contents
 
 
 def config(filename="database.ini", section="postgresql"):

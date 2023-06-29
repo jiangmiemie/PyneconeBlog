@@ -88,7 +88,6 @@ def dalle():
                         ),
                     ),
                 ),
-                bg="white",
                 padding="2em",
                 shadow="lg",
                 border_radius="lg",
