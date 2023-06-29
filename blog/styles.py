@@ -1,4 +1,5 @@
 import pynecone as pc
+from blog.constants import MAIN_URL
 
 # General styles.
 BOLD_WEIGHT = "800"
@@ -57,4 +58,4 @@ BASE_STYLE = {
 }
 
 # Fonts to include.
-STYLESHEETS = ["style.css", "font.css"]
+STYLESHEETS = [f"{MAIN_URL}/style.css", f"{MAIN_URL}/font.css"]

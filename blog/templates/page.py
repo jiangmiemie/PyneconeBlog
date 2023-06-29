@@ -93,6 +93,26 @@ def doctext(*text, **props) -> pc.Component:
     )
 
 
+def openaipage(set_path: str | None = None, t: str | None = None) -> pc.Component:
+    def openaipage(contents: Callable[[], Route]) -> Route:
+        if set_path is None:
+            path = get_path(contents)
+        else:
+            path = set_path
+        if t is None:
+            title = f"{contents.__name__.replace('_', ' ').title()} | Islands"
+        else:
+            title = t
+
+        return Route(
+            path=path,
+            title=title,
+            component=contents,
+        )
+
+    return openaipage
+
+
 def imgpage(set_path: str | None = None, t: str | None = None) -> pc.Component:
     def imgpage(contents: Callable[[], Route]) -> Route:
         if set_path is None:

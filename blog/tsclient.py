@@ -5,7 +5,7 @@ from collections.abc import Iterable
 from blog.constants import MAIN_URL
 
 
-class Pagelist(pc.Model, table=True):
+class Pagelist:
     path: str
     tag: str
     time: int
@@ -62,7 +62,6 @@ def updata_data(sql):
         conn.commit()
         cur.close()
     except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
         return []
     finally:
         if conn is not None:
@@ -88,7 +87,6 @@ def check_data(sql="SELECT * FROM reflexblog WHERE index<1000"):
             return db
         return []
     except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
         return []
     finally:
         if conn is not None:

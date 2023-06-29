@@ -1,8 +1,10 @@
-import pynecone as pc
-import openai
 import os
+import openai
+import pynecone as pc
 from dotenv import load_dotenv
 from blog.base_state import State as BS
+from blog.templates.page import openaipage
+from blog.constants import MAIN_URL
 
 load_dotenv()
 OPENAIKEY = os.getenv("OPENAIKEY")
@@ -44,51 +46,19 @@ class QA(pc.Base):
     answer: str
 
 
-class State(BS):
-    """The dalle state."""
-
-    prompt = ""
-    image_url = ""
-    image_processing = False
-    image_made = False
-
-    def process_image(self):
-        """Set the image processing flag to true and indicate that the image has not been made yet."""
-        self.image_made = False
-        self.image_processing = True
-
-    def get_image(self):
-        """Get the image from the prompt."""
-        try:
-            response = openai.Image.create(prompt=self.prompt, n=1, size="1024x1024")
-            self.image_url = response["data"][0]["url"]
-            # Set the image processing flag to false and indicate that the image has been made.
-            self.image_processing = False
-            self.image_made = True
-        except:
-            self.image_processing = False
-            return pc.window_alert("Error with OpenAI Execution.")
-
-    """The chat state."""
-
-    # A dict from the chat name to the list of questions and answers.
+class GPTState(BS):
     chats: dict[str, list[QA]] = {
         "Intros": [QA(question="What is your name?", answer="Openai")],
     }
 
-    # The current chat name.
     current_chat = "Intros"
 
-    # The currrent question.
     question: str
 
-    # The name of the new chat.
     new_chat_name: str = ""
 
-    # Whether the drawer is open.
     drawer_open: bool = False
 
-    # Whether the modal is open.
     modal_open: bool = False
 
     def create_chat(self):
@@ -199,7 +169,7 @@ def chat() -> pc.Component:
     """List all the messages in a single conversation."""
     return pc.vstack(
         pc.box(
-            pc.foreach(State.chats[State.current_chat], message),
+            pc.foreach(GPTState.chats[GPTState.current_chat], message),
             width="100%",
         ),
         py="8",
@@ -225,12 +195,12 @@ def action_bar() -> pc.Component:
                 pc.hstack(
                     pc.input(
                         placeholder="Type something...",
-                        on_change=State.set_question,
+                        on_change=GPTState.set_question,
                         id="question",
                         _hover={"border_color": "#5535d4"},
                     ),
                 ),
-                on_submit=State.process_question,
+                on_submit=GPTState.process_question,
                 width="100%",
             ),
             pc.text(
@@ -266,12 +236,12 @@ def navbar():
                 pc.icon(
                     tag="hamburger",
                     mr=4,
-                    on_click=State.toggle_drawer,
+                    on_click=GPTState.toggle_drawer,
                     cursor="pointer",
                 ),
                 pc.link(
                     pc.box(
-                        pc.image(src="openai.png", width=30, height="auto"),
+                        pc.image(src=f"{MAIN_URL}/openai.png", width=30, height="auto"),
                         p="1",
                         border_radius="6",
                         bg="#F0F0F0",
@@ -284,13 +254,9 @@ def navbar():
                         pc.heading("GPT", size="sm"),
                     ),
                     pc.breadcrumb_item(
-                        pc.text(State.current_chat, size="sm", font_weight="normal"),
+                        pc.text(GPTState.current_chat, size="sm", font_weight="normal"),
                     ),
                 ),
-            ),
-            pc.button(
-                pc.icon(tag="moon"),
-                on_click=pc.toggle_color_mode,
             ),
             justify="space-between",
         ),
@@ -315,7 +281,7 @@ def modal() -> pc.Component:
                         pc.icon(
                             tag="close",
                             font_size="sm",
-                            on_click=State.toggle_modal,
+                            on_click=GPTState.toggle_modal,
                             color="#fff8",
                             _hover={"color": "#fff"},
                             cursor="pointer",
@@ -327,7 +293,7 @@ def modal() -> pc.Component:
                 pc.modal_body(
                     pc.input(
                         placeholder="Type something...",
-                        on_blur=State.set_new_chat_name,
+                        on_blur=GPTState.set_new_chat_name,
                         bg="#222",
                         border_color="#fff3",
                         _placeholder={"color": "#fffa"},
@@ -342,14 +308,14 @@ def modal() -> pc.Component:
                         py="2",
                         h="auto",
                         _hover={"bg": "#4c2db3"},
-                        on_click=[State.create_chat, State.toggle_modal],
+                        on_click=[GPTState.create_chat, GPTState.toggle_modal],
                     ),
                 ),
                 bg="#222",
                 color="#fff",
             ),
         ),
-        is_open=State.modal_open,
+        is_open=GPTState.modal_open,
     )
 
 
@@ -362,7 +328,7 @@ def sidebar_chat(chat: str) -> pc.Component:
     return pc.hstack(
         pc.box(
             chat,
-            on_click=lambda: State.set_chat(chat),
+            on_click=lambda: GPTState.set_chat(chat),
             style=sidebar_style,
             flex="1",
         ),
@@ -370,7 +336,7 @@ def sidebar_chat(chat: str) -> pc.Component:
             pc.icon(
                 tag="delete",
                 style=icon_style,
-                on_click=State.delete_chat,
+                on_click=GPTState.delete_chat,
             ),
             style=sidebar_style,
         ),
@@ -391,11 +357,11 @@ def sidebar() -> pc.Component:
                             px="4",
                             py="2",
                             h="auto",
-                            on_click=State.toggle_modal,
+                            on_click=GPTState.toggle_modal,
                         ),
                         pc.icon(
                             tag="close",
-                            on_click=State.toggle_drawer,
+                            on_click=GPTState.toggle_drawer,
                             style=icon_style,
                         ),
                         justify="space-between",
@@ -403,20 +369,51 @@ def sidebar() -> pc.Component:
                 ),
                 pc.drawer_body(
                     pc.vstack(
-                        pc.foreach(State.chat_titles, lambda chat: sidebar_chat(chat)),
+                        pc.foreach(
+                            GPTState.chat_titles, lambda chat: sidebar_chat(chat)
+                        ),
                         align_items="stretch",
                     )
                 ),
             ),
         ),
         placement="left",
-        is_open=State.drawer_open,
+        is_open=GPTState.drawer_open,
     )
 
 
+def openainavbar():
+    return pc.box(
+        pc.hstack(
+            pc.link(
+                pc.text("GPT"),
+                href=f"{MAIN_URL}/openai/chatgpt",
+            ),
+            pc.link(
+                pc.text("DALLE"),
+                href=f"{MAIN_URL}/openai/dalle",
+            ),
+            pc.button(
+                pc.icon(tag="moon"),
+                on_click=pc.toggle_color_mode,
+            ),
+            justify="space-evenly",
+        ),
+        backdrop_filter="auto",
+        backdrop_blur="lg",
+        p="4",
+        border_bottom="1px solid #fff3",
+        position="sticky",
+        top="0",
+        z_index="100",
+    )
+
+
+@openaipage()
 def chatgpt() -> pc.Component:
     """The main app."""
     return pc.vstack(
+        openainavbar(),
         navbar(),
         chat(),
         action_bar(),
@@ -426,38 +423,4 @@ def chatgpt() -> pc.Component:
         align_items="stretch",
         spacing="0",
         justify_content="space-between",
-    )
-
-
-def dalle():
-    return pc.center(
-        pc.vstack(
-            pc.heading("DALL-E", font_size="1.5em"),
-            pc.input(placeholder="Enter a prompt..", on_blur=State.set_prompt),
-            pc.button(
-                "Generate Image",
-                on_click=[State.process_image, State.get_image],
-                width="100%",
-            ),
-            pc.divider(),
-            pc.cond(
-                State.image_processing,
-                pc.circular_progress(is_indeterminate=True),
-                pc.cond(
-                    State.image_made,
-                    pc.image(
-                        src=State.image_url,
-                        height="25em",
-                        width="25em",
-                    ),
-                ),
-            ),
-            bg="white",
-            padding="2em",
-            shadow="lg",
-            border_radius="lg",
-        ),
-        width="100%",
-        height="100vh",
-        background="radial-gradient(circle at 22% 11%,rgba(62, 180, 137,.20),hsla(0,0%,100%,0) 19%),radial-gradient(circle at 82% 25%,rgba(33,150,243,.18),hsla(0,0%,100%,0) 35%),radial-gradient(circle at 25% 61%,rgba(250, 128, 114, .28),hsla(0,0%,100%,0) 55%)",
     )
