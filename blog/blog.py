@@ -6,8 +6,8 @@ from blog.middleware import CloseSidebarMiddleware
 from blog.openai import openairoutes
 from blog.openai.login import LoginState
 
-# from blog.pages import routes
-# from blog.components.scripts import *
+from blog.pages import routes
+from blog.components.scripts import *
 
 # Create the app.
 app = pc.App(
@@ -16,23 +16,23 @@ app = pc.App(
     stylesheets=styles.STYLESHEETS,
 )
 
-# for route in routes:
-#     app.add_page(
-#         route.component,
-#         route.path,
-#         route.title,
-#         description="永远怀着一颗学徒的心",
-#         meta=[
-#             {
-#                 "http_equiv": "Content-Security-Policy",
-#                 "content": "upgrade-insecure-requests",
-#             },
-#         ],
-#         image="logo.png",
-#         script_tags=[
-#             scripts(),
-#         ],
-#     )
+for route in routes:
+    app.add_page(
+        route.component,
+        route.path,
+        route.title,
+        description="永远怀着一颗学徒的心",
+        meta=[
+            {
+                "http_equiv": "Content-Security-Policy",
+                "content": "upgrade-insecure-requests",
+            },
+        ],
+        image="logo.png",
+        script_tags=[
+            scripts(),
+        ],
+    )
 for route in openairoutes:
     print(
         route.path,
