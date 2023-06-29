@@ -111,14 +111,14 @@ def get_sidebar(align, index=False):
                             "ChatGPT",
                         ),
                         **button_style,
-                        href="/chat",
+                        href="/openai/chat",
                     ),
                     pc.link(
                         pc.text(
                             "Dalle",
                         ),
                         **button_style,
-                        href="/dalle",
+                        href="/openai/dalle",
                     ),
                     pc.link(
                         pc.text(
