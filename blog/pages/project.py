@@ -144,10 +144,6 @@ def component_grid():
 @webpage()
 def project():
     return pc.box(
-        pc.text("记录一些自己做的项目"),
-        pc.divider(),
         component_grid(),
-        text_align="left",
-        margin_bottom="4em",
-        padding="4em 4em",
+        padding="1em 4em",
     )

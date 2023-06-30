@@ -1,11 +1,8 @@
 import pynecone as pc
 from blog import styles
-from blog.base_state import State
-from blog.middleware import CloseSidebarMiddleware
-
+from blog.base_state import State, CloseSidebarMiddleware
 from blog.openai import openairoutes
 from blog.openai.login import LoginState
-
 from blog.pages import routes
 from blog.components.scripts import *
 

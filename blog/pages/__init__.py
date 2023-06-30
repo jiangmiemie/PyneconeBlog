@@ -4,7 +4,7 @@ from .gallery import gallery
 from .month import month
 from .code import code
 from blog import tsclient
-from blog.route import Route
+from blog.base_state import Route
 from blog.templates.page import mdpage
 
 routes = [r for r in locals().values() if isinstance(r, Route)]

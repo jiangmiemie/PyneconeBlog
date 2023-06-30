@@ -1,7 +1,7 @@
 from typing import Callable
 import pynecone as pc
 from blog import styles
-from blog.route import Route, get_path
+from blog.base_state import Route, get_path
 from blog import tsclient
 from blog.components.footer import footer
 from blog.components.navbar import navbar
