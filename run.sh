@@ -1,5 +1,5 @@
 #!/bin/sh
-python3 init.py
+/usr/local/bin/python3.10 init.py
 
 lsof -i:8000
 lsof -i:3000
