@@ -16,7 +16,9 @@ link_style = {
 
 def component_grid(tag):
     sidebar = []
-    pagelists = tsclient.check_data(sql=f"SELECT * FROM reflexblog WHERE tag='{tag}'")
+    pagelists = tsclient.check_data(
+        sql=f"SELECT * FROM reflexblog WHERE category='{tag}'"
+    )
     for pagelist in pagelists:
         sidebar.insert(
             0,

@@ -10,12 +10,12 @@ def read_md():
     init_db()
     for root, dirs, files in os.walk(FILE_DIR, topdown=False):
         for name in files:
-            if ".png" in name:
-                continue
-            tag = root.replace(FILE_DIR, "").replace("\\", "").replace("/", "")
             file_path = os.path.join(root, name)
             with open(file_path) as f:
                 contents = f.read().replace("'", "''")
+
+            category = root.replace(FILE_DIR, "").replace("\\", "").replace("/", "")
+
             filename = name.replace(".md", "")
             time = int(filename[:6])
             title = filename[6:]
@@ -34,10 +34,10 @@ def read_md():
             )
 
             updata_data(
-                """INSERT INTO reflexblog ("index","path", "tag", "title","time", "contents") VALUES ('{}','{}','{}','{}','{}','{}');""".format(
+                """INSERT INTO reflexblog ("index","path", "category", "title","time", "contents") VALUES ('{}','{}','{}','{}','{}','{}');""".format(
                     index,
                     path,
-                    tag,
+                    category,
                     title,
                     time,
                     contents,

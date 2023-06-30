@@ -5,9 +5,9 @@ from blog.constants import MAIN_URL
 
 
 class Pagelist:
-    def __init__(self, path, tag, time, title, contents) -> None:
+    def __init__(self, path, category, time, title, contents) -> None:
         self.path = path
-        self.tag = tag
+        self.category = category
         self.time = time
         self.title = title
         self.contents = contents
@@ -40,7 +40,7 @@ def init_db():
     "index"	INT,
     "path"	VARCHAR(512),
     "title"	VARCHAR(512),
-    "tag"	VARCHAR(512),
+    "category"	VARCHAR(512),
     "time"	VARCHAR(512),
     "contents"	text
 );"""
