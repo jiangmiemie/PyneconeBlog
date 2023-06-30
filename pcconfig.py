@@ -7,8 +7,6 @@ config = pc.Config(
     backend_port=8000,
     api_url=constants.BACKEND_URL,
     frontend_packages=[
-        "react-colorful",
         "react-confetti",
-        "react-loading-icons",
     ],
 )

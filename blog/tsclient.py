@@ -30,7 +30,10 @@ def config(filename="database.ini", section="postgresql"):
 
 
 def init_db():
-    updata_data("""DROP TABLE reflexblog""")
+    try:
+        updata_data("""DROP TABLE reflexblog""")
+    except:
+        pass
 
     updata_data(
         """CREATE TABLE "reflexblog" (
