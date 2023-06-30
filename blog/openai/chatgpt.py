@@ -11,34 +11,6 @@ OPENAIKEY = os.getenv("OPENAIKEY")
 openai.api_key = OPENAIKEY
 
 
-shadow_light = "rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;"
-message_style = dict(display="inline-block", border_radius="xl", p="4", max_w="30em")
-text_light_color = "#fff"
-bg_dark_color = "#111"
-accennt_light = "#6649D8"
-accent_color = "#5535d4"
-accent_dark = "#4c2db3"
-
-icon_style = dict(
-    font_size="md",
-    _hover=dict(color=text_light_color),
-    cursor="pointer",
-    w="8",
-)
-
-sidebar_style = dict(
-    border="double 1px transparent;",
-    border_radius="10px;",
-    background_image=f"linear-gradient({bg_dark_color}, {bg_dark_color}), radial-gradient(circle at top left, {accent_color},{accent_dark});",
-    background_origin="border-box;",
-    background_clip="padding-box, border-box;",
-    p="2",
-    _hover=dict(
-        background_image=f"linear-gradient({bg_dark_color}, {bg_dark_color}), radial-gradient(circle at top left, {accent_color},{accennt_light});",
-    ),
-)
-
-
 class QA(pc.Base):
     """A question and answer pair."""
 
@@ -47,76 +19,13 @@ class QA(pc.Base):
 
 
 class GPTState(BS):
-    chats: dict[str, list[QA]] = {
-        "Intros": [QA(question="What is your name?", answer="Openai")],
-    }
-
-    current_chat = "Intros"
+    chats: list[QA] = [QA(question="What is your name?", answer="Openai")]
 
     question: str
 
-    new_chat_name: str = ""
-
-    drawer_open: bool = False
-
-    modal_open: bool = False
-
-    def create_chat(self):
-        """Create a new chat."""
-        # Insert a default question.
-        self.chats[self.new_chat_name] = [
-            QA(question="What is your name?", answer="Openai")
-        ]
-        self.current_chat = self.new_chat_name
-
-    def toggle_modal(self):
-        """Toggle the new chat modal."""
-        self.modal_open = not self.modal_open
-
-    def toggle_drawer(self):
-        """Toggle the drawer."""
-        self.drawer_open = not self.drawer_open
-
-    def delete_chat(self):
-        """Delete the current chat."""
-        del self.chats[self.current_chat]
-        if len(self.chats) == 0:
-            self.chats = {
-                "New Chat": [QA(question="What is your name?", answer="Openai")]
-            }
-        self.current_chat = list(self.chats.keys())[0]
-        self.toggle_drawer()
-
-    def set_chat(self, chat_name: str):
-        """Set the name of the current chat.
-
-        Args:
-            chat_name: The name of the chat.
-        """
-        self.current_chat = chat_name
-        self.toggle_drawer()
-
-    @pc.var
-    def chat_titles(self) -> list[str]:
-        """Get the list of chat titles.
-
-        Returns:
-            The list of chat names.
-        """
-        return list(self.chats.keys())
-
     async def process_question(self, form_data: dict[str, str]):
-        """Get the response from the API.
-
-        Args:
-            form_data: A dict with the current question.
-        """
-        # Check if we have already asked the last question or if the question is empty
         self.question = form_data["question"]
-        if (
-            self.chats[self.current_chat][-1].question == self.question
-            or self.question == ""
-        ):
+        if self.chats[-1].question == self.question or self.question == "":
             return
 
         session = openai.Completion.create(
@@ -129,11 +38,11 @@ class GPTState(BS):
             stream=True,  # Enable streaming
         )
         qa = QA(question=self.question, answer="")
-        self.chats[self.current_chat].append(qa)
+        self.chats.append(qa)
 
         for item in session:
             answer_text = item["choices"][0]["text"]
-            self.chats[self.current_chat][-1].answer += answer_text
+            self.chats[-1].answer += answer_text
             self.chats = self.chats
             yield
 
@@ -144,8 +53,11 @@ def message(qa: QA) -> pc.Component:
             pc.box(
                 pc.markdown(qa.question),
                 bg="#fff3",
-                shadow=shadow_light,
-                **message_style,
+                shadow="rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;",
+                display="inline-block",
+                border_radius="xl",
+                p="4",
+                max_w="30em",
             ),
             text_align="right",
             margin_top="1em",
@@ -155,8 +67,11 @@ def message(qa: QA) -> pc.Component:
                 pc.markdown(qa.answer),
                 color="white",
                 bg="#5535d4",
-                shadow=shadow_light,
-                **message_style,
+                shadow="rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;",
+                display="inline-block",
+                border_radius="xl",
+                p="4",
+                max_w="30em",
             ),
             text_align="left",
             padding_top="1em",
@@ -165,260 +80,66 @@ def message(qa: QA) -> pc.Component:
     )
 
 
-def chat() -> pc.Component:
-    """List all the messages in a single conversation."""
-    return pc.vstack(
-        pc.box(
-            pc.foreach(GPTState.chats[GPTState.current_chat], message),
-            width="100%",
-        ),
-        py="8",
-        flex="1",
-        width="100%",
-        max_w="3xl",
-        padding_x="4",
-        align_self="center",
-        align_items="stretch",
-        overflow="hidden",
-        padding_bottom="5em",
-        justify_content="space-between",
-        border="5px  #555",
-        box_shadow="lg",
-    )
-
-
-def action_bar() -> pc.Component:
-    """The action bar to send a new message."""
-    return pc.box(
-        pc.vstack(
-            pc.form(
-                pc.hstack(
-                    pc.input(
-                        placeholder="Type something...",
-                        on_change=GPTState.set_question,
-                        id="question",
-                        _hover={"border_color": "#5535d4"},
-                    ),
-                ),
-                on_submit=GPTState.process_question,
-                width="100%",
-            ),
-            pc.text(
-                "thanks for pynecone and openai(text-davinci-003) Please be careful not to keep asking the same question",
-                font_size="xs",
-                text_align="center",
-            ),
-            width="100%",
-            max_w="3xl",
-            mx="auto",
-            align_items="stretch",
-            justify_content="space-between",
-        ),
-        padding_x="2em",
-        border="5px  #555",
-        box_shadow="lg",
-        position="sticky",
-        bottom="0",
-        left="0",
-        py="4",
-        backdrop_filter="auto",
-        backdrop_blur="lg",
-        border_top=f"1px solid #fff3",
-        align_items="stretch",
-        width="100%",
-    )
-
-
-def navbar():
-    return pc.box(
-        pc.hstack(
-            pc.hstack(
-                pc.icon(
-                    tag="hamburger",
-                    mr=4,
-                    on_click=GPTState.toggle_drawer,
-                    cursor="pointer",
-                ),
-                pc.link(
-                    pc.box(
-                        pc.image(src=f"{MAIN_URL}/openai.png", width=30, height="auto"),
-                        p="1",
-                        border_radius="6",
-                        bg="#F0F0F0",
-                        mr="2",
-                    ),
-                    href="/",
-                ),
-                pc.breadcrumb(
-                    pc.breadcrumb_item(
-                        pc.heading("GPT", size="sm"),
-                    ),
-                    pc.breadcrumb_item(
-                        pc.text(GPTState.current_chat, size="sm", font_weight="normal"),
-                    ),
-                ),
-            ),
-            justify="space-between",
-        ),
-        backdrop_filter="auto",
-        backdrop_blur="lg",
-        p="4",
-        border_bottom="1px solid #fff3",
-        position="sticky",
-        top="0",
-        z_index="100",
-    )
-
-
-def modal() -> pc.Component:
-    """A modal to create a new chat."""
-    return pc.modal(
-        pc.modal_overlay(
-            pc.modal_content(
-                pc.modal_header(
-                    pc.hstack(
-                        pc.text("Create new chat"),
-                        pc.icon(
-                            tag="close",
-                            font_size="sm",
-                            on_click=GPTState.toggle_modal,
-                            color="#fff8",
-                            _hover={"color": "#fff"},
-                            cursor="pointer",
-                        ),
-                        align_items="center",
-                        justify_content="space-between",
-                    )
-                ),
-                pc.modal_body(
-                    pc.input(
-                        placeholder="Type something...",
-                        on_blur=GPTState.set_new_chat_name,
-                        bg="#222",
-                        border_color="#fff3",
-                        _placeholder={"color": "#fffa"},
-                    ),
-                ),
-                pc.modal_footer(
-                    pc.button(
-                        "Create",
-                        bg="#5535d4",
-                        box_shadow="md",
-                        px="4",
-                        py="2",
-                        h="auto",
-                        _hover={"bg": "#4c2db3"},
-                        on_click=[GPTState.create_chat, GPTState.toggle_modal],
-                    ),
-                ),
-                bg="#222",
-                color="#fff",
-            ),
-        ),
-        is_open=GPTState.modal_open,
-    )
-
-
-def sidebar_chat(chat: str) -> pc.Component:
-    """A sidebar chat item.
-
-    Args:
-        chat: The chat item.
-    """
-    return pc.hstack(
-        pc.box(
-            chat,
-            on_click=lambda: GPTState.set_chat(chat),
-            style=sidebar_style,
-            flex="1",
-        ),
-        pc.box(
-            pc.icon(
-                tag="delete",
-                style=icon_style,
-                on_click=GPTState.delete_chat,
-            ),
-            style=sidebar_style,
-        ),
-        color=text_light_color,
-        cursor="pointer",
-    )
-
-
-def sidebar() -> pc.Component:
-    """The sidebar component."""
-    return pc.drawer(
-        pc.drawer_overlay(
-            pc.drawer_content(
-                pc.drawer_header(
-                    pc.hstack(
-                        pc.button(
-                            "+ New chat",
-                            px="4",
-                            py="2",
-                            h="auto",
-                            on_click=GPTState.toggle_modal,
-                        ),
-                        pc.icon(
-                            tag="close",
-                            on_click=GPTState.toggle_drawer,
-                            style=icon_style,
-                        ),
-                        justify="space-between",
-                    )
-                ),
-                pc.drawer_body(
-                    pc.vstack(
-                        pc.foreach(
-                            GPTState.chat_titles, lambda chat: sidebar_chat(chat)
-                        ),
-                        align_items="stretch",
-                    )
-                ),
-            ),
-        ),
-        placement="left",
-        is_open=GPTState.drawer_open,
-    )
-
-
-def openainavbar():
-    return pc.box(
-        pc.hstack(
-            pc.link(
-                pc.text("GPT"),
-                href=f"{MAIN_URL}/openai/chatgpt",
-            ),
-            pc.link(
-                pc.text("DALLE"),
-                href=f"{MAIN_URL}/openai/dalle",
-            ),
-            pc.button(
-                pc.icon(tag="moon"),
-                on_click=pc.toggle_color_mode,
-            ),
-            justify="space-evenly",
-        ),
-        backdrop_filter="auto",
-        backdrop_blur="lg",
-        p="4",
-        border_bottom="1px solid #fff3",
-        position="sticky",
-        top="0",
-        z_index="100",
-    )
-
-
 @openaipage()
 def chatgpt() -> pc.Component:
-    """The main app."""
+    """List all the messages in a single conversation."""
     return pc.vstack(
-        openainavbar(),
-        navbar(),
-        chat(),
-        action_bar(),
-        sidebar(),
-        modal(),
+        pc.vstack(
+            pc.box(
+                pc.foreach(GPTState.chats, message),
+                width="100%",
+            ),
+            py="8",
+            flex="1",
+            width="100%",
+            max_w="3xl",
+            padding_x="4",
+            align_self="center",
+            align_items="stretch",
+            overflow="hidden",
+            padding_bottom="5em",
+            justify_content="space-between",
+            border="5px  #555",
+            box_shadow="lg",
+        ),
+        pc.box(
+            pc.vstack(
+                pc.form(
+                    pc.hstack(
+                        pc.input(
+                            placeholder="Type something...",
+                            on_change=GPTState.set_question,
+                            id="question",
+                            _hover={"border_color": "#5535d4"},
+                        ),
+                    ),
+                    on_submit=GPTState.process_question,
+                    width="100%",
+                ),
+                pc.text(
+                    "thanks for pynecone and openai(text-davinci-003) Please be careful not to keep asking the same question",
+                    font_size="xs",
+                    text_align="center",
+                ),
+                width="100%",
+                max_w="3xl",
+                mx="auto",
+                align_items="stretch",
+                justify_content="space-between",
+            ),
+            padding_x="2em",
+            border="5px  #555",
+            box_shadow="lg",
+            position="sticky",
+            bottom="0",
+            left="0",
+            py="4",
+            backdrop_filter="auto",
+            backdrop_blur="lg",
+            border_top=f"1px solid #fff3",
+            align_items="stretch",
+            width="100%",
+        ),
         min_h="100vh",
         align_items="stretch",
         spacing="0",

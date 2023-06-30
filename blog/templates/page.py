@@ -104,10 +104,30 @@ def openaipage(set_path: str | None = None, t: str | None = None) -> pc.Componen
         else:
             title = t
 
+        def wrapper(*args, **kwargs) -> pc.Component:
+            from blog.components.footer import footer
+            from blog.components.navbar import navbar
+
+            if not isinstance(contents, pc.Component):
+                comp = contents(*args, **kwargs)
+            else:
+                comp = contents
+
+            return pc.box(
+                pc.vstack(
+                    navbar(),
+                    comp,
+                    min_h="100vh",
+                    align_items="stretch",
+                    spacing="0",
+                    justify_content="space-between",
+                )
+            )
+
         return Route(
             path=path,
             title=title,
-            component=contents,
+            component=wrapper,
         )
 
     return openaipage
