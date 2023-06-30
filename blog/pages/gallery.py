@@ -5,7 +5,6 @@ from blog.templates.page import webpage, component_grid
 @webpage()
 def gallery():
     return pc.box(
-        pc.heading("相册", first=True),
         pc.text("记录了一些美好的画面"),
         pc.divider(),
         component_grid("gallery"),

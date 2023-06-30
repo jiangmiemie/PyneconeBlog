@@ -1,45 +1,20 @@
 import os
-import pynecone as pc
-from blog.tsclient import Pagelist, updata_data
+from blog.tsclient import Pagelist, check_data
 
 FILE_DIR = os.path.join("assets", "pages")
 
 
 def read_md():
     flat_items = []
-    for root, dirs, files in os.walk(FILE_DIR, topdown=False):
-        for name in files:
-            if ".png" in name:
-                continue
-            tag = root.replace(FILE_DIR, "").replace("\\", "")
-            file_path = os.path.join(root, name)
-            with open(file_path) as f:
-                contents = f.read()
-            filename = name.replace(".md", "")
-            time = int(filename[:6])
-            title = filename[6:]
-            path = (
-                str(
-                    (
-                        file_path.replace(FILE_DIR, "")
-                        .replace("\\", "/")
-                        .replace(".md", "")
-                        .replace(str(time), "")
-                    ).encode("utf-8")
-                )
-                .replace("b", "")
-                .replace(r"\x", "")
-                .replace("'", "")
-            )
-
-            p = Pagelist(
-                path=path,
-                category=tag,
-                title=title,
-                time=time,
-                contents=contents,
-            )
-            flat_items.append(p)
+    for i in check_data():
+        p = Pagelist(
+            path=i[1],
+            title=i[2],
+            category=i[3],
+            time=i[4],
+            contents=i[5],
+        )
+        flat_items.append(p)
 
     return flat_items
 

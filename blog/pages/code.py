@@ -5,7 +5,6 @@ from blog.templates.page import webpage, component_grid
 @webpage()
 def code():
     return pc.box(
-        pc.heading("编码", first=True),
         pc.text("记录了一些代码学习记录"),
         pc.divider(),
         component_grid("code"),

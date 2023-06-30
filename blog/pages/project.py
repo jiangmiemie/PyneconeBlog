@@ -144,7 +144,6 @@ def component_grid():
 @webpage()
 def project():
     return pc.box(
-        pc.heading("项目", first=True),
         pc.text("记录一些自己做的项目"),
         pc.divider(),
         component_grid(),
