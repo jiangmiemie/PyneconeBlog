@@ -4,8 +4,7 @@
 **/*.pyc
 .env
 database.ini
-table.pypynecone.db
 *.py[cod]
 .web
-nohup.out__pycache__/
+nohup.out__pycache__/
 pynecone.db

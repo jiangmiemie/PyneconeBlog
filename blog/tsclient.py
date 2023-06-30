@@ -1,4 +1,3 @@
-import pynecone as pc
 import psycopg2
 from configparser import ConfigParser
 from collections.abc import Iterable
@@ -46,14 +45,6 @@ def init_db():
 
 
 def updata_data(sql):
-    """
-    插入2条数据， RUN 表示状态为正常，大小写敏感，如果插入数据有单引号如： jack's blog 需要改成 jack''s blog(变成2个单引号)
-    INSERT INTO reflexblog ("indexs", "status", "name", "link") VALUES ('99998', 'RUN', '开往', 'https://github.com/travellings-link/travellings');
-    INSERT INTO reflexblog ("indexs", "status", "name", "link") VALUES ('99999', 'RUN', '开往', 'https://github.com/travellings-link/travellings');
-
-    修改示例 2，更新indexs值为99998的数据，设置它的状态值为'LOST'
-    test3 = "UPDATE reflexblog SET status = 'LOST' WHERE indexs=99998"
-    """
     conn = None
     try:
         params = config()
@@ -70,10 +61,6 @@ def updata_data(sql):
 
 
 def check_data(sql="SELECT * FROM reflexblog WHERE index<1000"):
-    """
-    查询示例， 查询indexs为'99998'的数据
-    test4 = "SELECT * FROM reflexblog WHERE indexs=99998"
-    """
     conn = None
     try:
         params = config()

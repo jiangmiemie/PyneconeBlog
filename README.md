@@ -1,53 +1,52 @@
-[English](README.md) | [中文](READMEzh.md)
+[中文](README.md) | [English](READMEen.md)
 
-## About ME
-
-- Language：Chinese/English
-- Development direction：Full Stack Developer
-- Computer language：Python/Js
-- Degree: Bachelor of Management, Master of Electronic Information (ongoing)
-
-## Contact me
-
-- Email: jiangyangcreate@gmail.com
-- Personal website: https://www.jiangmiemie.com
-- Github：https://github.com/jiangmiemie
-
-## AIM
-
-I learned about traditional front-end web knowledge while learning about React framework commonly used in modern front-end.
-
-1. A blog built purely in Python
-2. where markdown is a first-class citizen (users can freely import and export markdown files, come and go freely)
-3. plug-in (keep low coupling, try not to call external JS files, one JS file per function)
-
-
-## Example
+## 示例
 
 https://www.jiangmiemie.com
 
-## Use
 
-### install
-`pip install -r requirements.txt`
+## 目标
 
+用纯Python构建一个**易于管理**、**低耦合**、**自由**的应用网站（包含应用演示与文档说明）其中Markdown是一等公民，用户只需放置md文件即可生成网页。
 
-### chechk
+参考站点：
+[docusaurus](https://docusaurus.io/zh-CN/docs/category/guides)
+[pynecone](https://pynecone.io/)
 
-check the  `pcconfig.py` and change  `backend` to your backend(port or url)
+## 使用
 
+默认服务器已安装Python3.8或更高版本
 
-### NEW db
+### 准备
+数据使用了默认为PGSQL，因此需要**新建一个数据库**。假设你的数据库信息如下：
 
-create a pgsql and add  database.ini  , like this :
+database=reflexblog
+user=reflexblog
+password=yourpassword
 
+那么，请在根目录新建一个`database.ini`文件，内容如下：
+
+```
 [postgresql]
 host=localhost
 database=reflexblog
 user=reflexblog
-password=***your password***
+password=yourpassword
+```
 
-### RUN
+### 下载依赖
 
-than `bash run.sh`
+`pip install -r requirements.txt`
 
+
+### 域名
+
+申请好前端域名和后端域名，并配置SSL。
+
+修改[constants.py](blog/constants.py)
+`MAIN_URL`为你的前端域名：前端展示于此。
+`BACKEND_URL`为你的后端域名：后台服务运行于此，未正确配置会导致响应事件异常。
+
+### 运行
+
+切换到本文件夹所在目录，运行`bash run.sh`
