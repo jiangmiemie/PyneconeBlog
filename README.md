@@ -34,6 +34,12 @@ user=reflexblog
 password=yourpassword
 ```
 
+如果你要使用一些应用，那么请同样的在根目录下新建一个文件`.env`，将相关的apikey可以放置其中。例如
+
+```
+OPENAIKEY = "sk-****************************"
+```
+
 ### 下载依赖
 
 `pip install -r requirements.txt`

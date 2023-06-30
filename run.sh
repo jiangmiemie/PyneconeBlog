@@ -1,5 +1,5 @@
 #!/bin/sh
-/usr/local/bin/python3.10 /home/PyneconeBlog/table.py
+python3 init.py
 
 lsof -i:8000
 lsof -i:3000

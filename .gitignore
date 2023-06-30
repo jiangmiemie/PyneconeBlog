@@ -2,9 +2,7 @@
 **.vscode
 **__pycache__
 **/*.pyc
+nohup.out
 .env
 database.ini
-*.py[cod]
-.web
-nohup.out__pycache__/
 pynecone.db

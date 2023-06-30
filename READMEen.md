@@ -34,6 +34,12 @@ user=reflexblog
 password=yourpassword
 ```
 
+If you want to use some applications, then please also create a new file `.env` in the root directory where you can place the relevant apikeys. For example
+
+```
+OPENAIKEY = "sk-****************************"
+```
+
 ### Download the dependencies
 
 `pip install -r requirements.txt`

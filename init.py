@@ -1,6 +1,5 @@
 import os
-import pynecone as pc
-from blog.tsclient import Pagelist, updata_data, init_db
+from blog.tsclient import updata_data, init_db
 
 FILE_DIR = os.path.join("assets", "pages")
 
