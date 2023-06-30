@@ -60,8 +60,12 @@ def webpage(
         def wrapper(*children, **props) -> pc.Component:
             return pc.box(
                 navbar(index),
-                comp,
-                footer(),
+                pc.box(
+                    comp,
+                    footer(),
+                    width="100%",
+                    height="100vh",
+                ),
                 font_family="Inter",
                 **props,
             )
