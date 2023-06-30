@@ -1,6 +1,6 @@
 import pynecone as pc
 from blog.base_state import State as BS
-from blog.templates.page import openaipage
+from blog.templates.page import webpage
 from blog.constants import MAIN_URL
 
 
@@ -23,7 +23,7 @@ class LoginState(BS):
             return pc.redirect(f"{MAIN_URL}/openai/login")
 
 
-@openaipage()
+@webpage()
 def login():
     return pc.box(
         pc.container(

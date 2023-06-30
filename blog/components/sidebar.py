@@ -34,7 +34,7 @@ def read_md():
 
             p = Pagelist(
                 path=path,
-                tag=tag,
+                category=tag,
                 title=title,
                 time=time,
                 contents=contents,

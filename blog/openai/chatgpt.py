@@ -3,7 +3,7 @@ import openai
 import pynecone as pc
 from dotenv import load_dotenv
 from blog.base_state import State as BS
-from blog.templates.page import openaipage
+from blog.templates.page import webpage
 from blog.constants import MAIN_URL
 
 load_dotenv()
@@ -80,7 +80,7 @@ def message(qa: QA) -> pc.Component:
     )
 
 
-@openaipage()
+@webpage()
 def chatgpt() -> pc.Component:
     """List all the messages in a single conversation."""
     return pc.vstack(

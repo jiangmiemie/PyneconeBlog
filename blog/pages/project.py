@@ -1,6 +1,6 @@
 import pynecone as pc
 from blog import constants, styles
-from blog.templates.page import imgpage, docheader, doctext
+from blog.templates.page import webpage
 
 
 difficulty_colors = {"Blog": "green", "Spider": "orange", "project": "blue"}
@@ -141,13 +141,14 @@ def component_grid():
     return pc.box(pc.responsive_grid(*sidebar, columns=[1, None, 5], spacing="1em"))
 
 
-@imgpage()
+@webpage()
 def project():
     return pc.box(
-        docheader("项目", first=True),
-        doctext("记录一些自己做的项目"),
+        pc.heading("项目", first=True),
+        pc.text("记录一些自己做的项目"),
         pc.divider(),
         component_grid(),
         text_align="left",
         margin_bottom="4em",
+        padding="4em 4em",
     )

@@ -1,17 +1,10 @@
-"""Template for documentation pages."""
 from typing import Callable
 import pynecone as pc
 from blog import styles
-from blog import constants
 from blog.route import Route, get_path
 from blog import tsclient
-
-link_style = {
-    "color": styles.LIGHT_TEXT_COLOR,
-    "font_weight": "500",
-    "_hover": {"color": styles.ACCENT_COLOR},
-    "fontSize": "1.2em",
-}
+from blog.components.footer import footer
+from blog.components.navbar import navbar
 
 
 def component_grid(tag):
@@ -45,85 +38,32 @@ def component_grid(tag):
     )
 
 
-def docheader(
-    text: str,
-    first: bool = False,
-    font_size: float = None,
-    coming_soon: bool = False,
-    divider: bool = True,
-    **props,
-) -> pc.Component:
-    # Get the basic styles.
-    style = {"marginTop": "1em"} if not first else {}
-    if font_size:
-        style["fontSize"] = font_size
-
-    # Set the text.
-    children = [pc.heading(text, style=style, **props)]
-
-    # Add a badge if the header is coming soon.
-    if coming_soon:
-        children.append(
-            pc.badge(
-                "Coming Soon!",
-                bg=styles.ACCENT_COLOR,
-                color="white",
-            ),
-        )
-
-    # Add a divider if needed.
-    if divider:
-        children.append(pc.divider())
-
-    # Return the header.
-    return pc.box(
-        *children,
-        id="-".join(text.lower().split()),
-        # color=styles.DOC_HEADER_COLOR,
-        font_weight=styles.DOC_HEADING_FONT_WEIGHT,
-        width="100%",
-    )
-
-
-def doctext(*text, **props) -> pc.Component:
-    return pc.box(
-        *text,
-        margin_bottom="1em",
-        font_size=styles.TEXT_FONT_SIZE,
-        width="100%",
-        **props,
-    )
-
-
-def openaipage(set_path: str | None = None, t: str | None = None) -> pc.Component:
-    def openaipage(contents: Callable[[], Route]) -> Route:
-        if set_path is None:
+def webpage(
+    path: str | None = None, title: str | None = None, index=False, *children, **props
+) -> Callable:
+    def webpage(
+        contents: Callable[[], Route], path=path, title=title, props=props, index=index
+    ) -> Route:
+        if path is None:
             path = get_path(contents)
         else:
-            path = set_path
-        if t is None:
+            path = path
+        if title is None:
             title = f"{contents.__name__.replace('_', ' ').title()} | Islands"
         else:
-            title = t
+            title = title
+        if not isinstance(contents, pc.Component):
+            comp = contents(*children, **props)
+        else:
+            comp = contents
 
-        def wrapper(*args, **kwargs) -> pc.Component:
-            from blog.components.footer import footer
-            from blog.components.navbar import navbar
-
-            if not isinstance(contents, pc.Component):
-                comp = contents(*args, **kwargs)
-            else:
-                comp = contents
-
+        def wrapper(*children, **props) -> pc.Component:
             return pc.box(
-                pc.vstack(
-                    navbar(),
-                    comp,
-                    min_h="100vh",
-                    align_items="stretch",
-                    spacing="0",
-                    justify_content="space-between",
-                )
+                navbar(index),
+                comp,
+                footer(),
+                font_family="Inter",
+                **props,
             )
 
         return Route(
@@ -132,61 +72,10 @@ def openaipage(set_path: str | None = None, t: str | None = None) -> pc.Componen
             component=wrapper,
         )
 
-    return openaipage
-
-
-def imgpage(set_path: str | None = None, t: str | None = None) -> pc.Component:
-    def imgpage(contents: Callable[[], Route]) -> Route:
-        if set_path is None:
-            path = get_path(contents)
-        else:
-            path = set_path
-
-        if t is None:
-            title = f"{contents.__name__.replace('_', ' ').title()} | Islands"
-        else:
-            title = t
-
-        def wrapper(*args, **kwargs) -> pc.Component:
-            from blog.components.footer import footer
-            from blog.components.navbar import navbar
-
-            if not isinstance(contents, pc.Component):
-                comp = contents(*args, **kwargs)
-            else:
-                comp = contents
-
-            return pc.box(
-                navbar(),
-                pc.box(
-                    pc.flex(
-                        pc.vstack(
-                            comp,
-                            padding_left=["1em", "2em", "5em", "8em"],
-                            padding_right=styles.PADDING_X,
-                            width=["100%", "100%", "100%", "100%"],
-                            padding_top="2em",
-                        ),
-                        margin_x="auto",
-                        margin_top="1em",
-                    ),
-                    footer(),
-                    font_family="Inter",
-                ),
-            )
-
-        return Route(
-            path=path,
-            title=title,
-            component=wrapper,
-        )
-
-    return imgpage
+    return webpage
 
 
 def mdpage(text: str, path: str, title: str, time: str, *args, **kwargs):
-    from blog.components.footer import footer
-    from blog.components.navbar import navbar
     from blog.components.sidebar import get_prev_next
 
     prev, next = get_prev_next(path)
@@ -196,7 +85,12 @@ def mdpage(text: str, path: str, title: str, time: str, *args, **kwargs):
             pc.link(
                 "← " + prev.title,
                 href=prev.path,
-                style=link_style,
+                style={
+                    "color": styles.LIGHT_TEXT_COLOR,
+                    "font_weight": "500",
+                    "_hover": {"color": styles.ACCENT_COLOR},
+                    "fontSize": "1.2em",
+                },
             )
         )
     else:
@@ -207,7 +101,12 @@ def mdpage(text: str, path: str, title: str, time: str, *args, **kwargs):
             pc.link(
                 next.title + " →",
                 href=next.path,
-                style=link_style,
+                style={
+                    "color": styles.LIGHT_TEXT_COLOR,
+                    "font_weight": "500",
+                    "_hover": {"color": styles.ACCENT_COLOR},
+                    "fontSize": "1.2em",
+                },
             )
         )
     else:
@@ -229,7 +128,7 @@ def mdpage(text: str, path: str, title: str, time: str, *args, **kwargs):
                     pc.box(
                         comp,
                         pc.divider(),
-                        doctext(
+                        pc.text(
                             "本文最后修改于{}年{}月".format(str(time)[:4], int(str(time)[4:]))
                         ),
                         pc.alert(
@@ -264,28 +163,3 @@ def mdpage(text: str, path: str, title: str, time: str, *args, **kwargs):
         footer(),
         font_family="Inter",
     )
-
-
-def webpage(path: str, title: str = constants.DEFAULT_TITLE, props=None) -> Callable:
-    props = props or {}
-
-    def webpage(contents: Callable[[], Route]) -> Route:
-        def wrapper(*children, **props) -> pc.Component:
-            from blog.components.footer import footer
-            from blog.components.navbar import navbar
-
-            return pc.box(
-                navbar(True),
-                contents(*children, **props),
-                footer(),
-                font_family="Inter",
-                **props,
-            )
-
-        return Route(
-            path=path,
-            title=title,
-            component=wrapper,
-        )
-
-    return webpage

@@ -30,7 +30,7 @@ class IndexState(State):
         self.show_confetti = False
 
 
-@webpage(path="/")
+@webpage(path="/", index=True)
 def index() -> pc.Component:
     from blog.components.navbar import NavbarState
 

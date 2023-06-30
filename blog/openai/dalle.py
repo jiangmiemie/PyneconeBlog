@@ -3,7 +3,7 @@ import openai
 import pynecone as pc
 from dotenv import load_dotenv
 from blog.base_state import State as BS
-from blog.templates.page import openaipage
+from blog.templates.page import webpage
 from blog.constants import MAIN_URL
 
 load_dotenv()
@@ -35,7 +35,7 @@ class DalleState(BS):
             return pc.window_alert("Error with OpenAI Execution.")
 
 
-@openaipage()
+@webpage()
 def dalle() -> pc.Component:
     return pc.center(
         pc.vstack(
