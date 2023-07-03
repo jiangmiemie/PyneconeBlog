@@ -68,24 +68,17 @@ def get_sidebar(align, index=False):
     return align(
         pc.link(
             pc.text(
-                "月记",
+                "文章",
             ),
-            href="/month",
+            href="/page",
             **button_style,
         ),
         pc.link(
             pc.text(
-                "相册",
+                "项目",
             ),
-            href="/gallery",
             **button_style,
-        ),
-        pc.link(
-            pc.text(
-                "编程",
-            ),
-            href="/code",
-            **button_style,
+            href="/project",
         ),
         pc.popover(
             pc.popover_trigger(pc.text("其他")),
@@ -98,35 +91,6 @@ def get_sidebar(align, index=False):
                         ),
                         **button_style,
                         href="/principle",
-                    ),
-                    pc.link(
-                        pc.text(
-                            "项目",
-                        ),
-                        **button_style,
-                        href="/project",
-                    ),
-                    pc.link(
-                        pc.text(
-                            "ChatGPT",
-                        ),
-                        **button_style,
-                        href="/openai/chatgpt",
-                    ),
-                    pc.link(
-                        pc.text(
-                            "Dalle",
-                        ),
-                        **button_style,
-                        href="/openai/dalle",
-                    ),
-                    pc.link(
-                        pc.text(
-                            "云盘",
-                            _focus={},
-                        ),
-                        **button_style,
-                        href=constants.SPACE_URL,
                     ),
                     justify="space-evenly",
                 )
