@@ -14,5 +14,4 @@ def page():
         pc.heading("月记"),
         component_grid("month"),
         padding="1em 4em",
-        height="100vh",
     )
