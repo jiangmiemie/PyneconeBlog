@@ -80,22 +80,6 @@ def get_sidebar(align, index=False):
             **button_style,
             href="/project",
         ),
-        pc.popover(
-            pc.popover_trigger(pc.text("其他")),
-            pc.popover_content(
-                align(
-                    pc.link(
-                        pc.text(
-                            "原则",
-                            _focus={},
-                        ),
-                        **button_style,
-                        href="/principle",
-                    ),
-                    justify="space-evenly",
-                )
-            ),
-        ),
         index_links if index == False else pc.box(),
     )
 

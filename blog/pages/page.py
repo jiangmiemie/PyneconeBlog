@@ -5,6 +5,8 @@ from blog.templates.page import webpage, component_grid
 @webpage()
 def page():
     return pc.box(
+        pc.heading("原则"),
+        component_grid("principle"),
         pc.heading("代码"),
         component_grid("code"),
         pc.heading("相册"),
