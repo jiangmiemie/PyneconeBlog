@@ -1,8 +1,9 @@
-from typing import Callable
 import pynecone as pc
-from web.base_state import Route, get_path
 from web import constants
+from typing import Callable
 from web.base_state import State
+from web.base_state import Route, get_path
+
 
 button_style = {
     "_hover": {"color": constants.ACCENT_COLOR, "text_decoration": "none"},

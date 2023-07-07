@@ -1,6 +1,6 @@
 import inspect
-from typing import Callable
 import pynecone as pc
+from typing import Callable
 from pynecone.base import Base
 
 

@@ -1,11 +1,12 @@
 import pynecone as pc
 from web import constants
-from web.base_state import State, CloseSidebarMiddleware
-from web.openai import openairoutes
-from web.pgsql import pgsqlroutes
+from web.scripts import scripts
 from web.openai.login import LoginState
+from web.base_state import State, CloseSidebarMiddleware
 from web import routes
-from web.scripts import *
+from web.pgsql import pgsqlroutes
+from web.openai import openairoutes
+
 
 # Create the app.
 app = pc.App(

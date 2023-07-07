@@ -10,8 +10,7 @@ example_list = [
         "difficulty": "project",
         "tags": ["全栈"],
         "description": "personal web site",
-        "img": "/bg.png",
-        "source": "",
+        "source": "{}/openai/chatgpt".format(constants.GITHUB_PRO_URL),
         "url": "{}/openai/chatgpt".format(constants.MAIN_URL),
     },
     {
@@ -19,8 +18,7 @@ example_list = [
         "difficulty": "project",
         "tags": ["全栈"],
         "description": "personal web site",
-        "img": "/bg.png",
-        "source": "",
+        "source": "{}/openai/chatgpt".format(constants.GITHUB_PRO_URL),
         "url": "{}/openai/dalle".format(constants.MAIN_URL),
     },
     {
@@ -28,8 +26,7 @@ example_list = [
         "difficulty": "project",
         "tags": ["全栈"],
         "description": "personal web site",
-        "img": "/bg.png",
-        "source": "",
+        "source": "{}/openai/chatgpt".format(constants.GITHUB_PRO_URL),
         "url": "{}/pgsql/pgsql".format(constants.MAIN_URL),
     },
 ]
@@ -52,17 +49,6 @@ def project():
     for category in example_list:
         sidebar.append(
             pc.vstack(
-                pc.box(
-                    height="10em",
-                    background_image=category["img"],
-                    background_size="cover",
-                    background_position="center",
-                    background_repeat="no-repeat",
-                    _hover={
-                        "background_size": "cover",
-                    },
-                    rounded="lg",
-                ),
                 pc.hstack(
                     pc.spacer(),
                     pc.badge(
