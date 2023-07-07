@@ -1,22 +1,21 @@
 import pynecone as pc
-from web import styles
+from web import constants
 from web.base_state import State, CloseSidebarMiddleware
 from web.openai import openairoutes
 from web.pgsql import pgsqlroutes
 from web.openai.login import LoginState
 from web import routes
-from web.components.scripts import *
+from web.scripts import *
 
 # Create the app.
 app = pc.App(
     state=State,
-    style=styles.BASE_STYLE,
-    stylesheets=styles.STYLESHEETS,
+    style=constants.BASE_STYLE,
+    stylesheets=constants.STYLESHEETS,
 )
 
 # simple app.
 for route in pgsqlroutes + routes:
-    print(route.path)
     app.add_page(
         route.component,
         route.path,

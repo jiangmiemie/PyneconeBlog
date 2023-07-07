@@ -1,6 +1,6 @@
 import pynecone as pc
 from web.base_state import State as BS
-from web.components.page import webpage
+from web.page import webpage
 from web.constants import MAIN_URL
 
 

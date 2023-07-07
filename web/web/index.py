@@ -1,6 +1,6 @@
 import pynecone as pc
-from web import constants, styles
-from web.components.page import webpage
+from web import constants
+from web.page import webpage
 
 
 difficulty_colors = {"Blog": "green", "Spider": "orange", "project": "blue"}
@@ -74,7 +74,7 @@ def project():
                 pc.box(
                     category["description"],
                     style={"fontSize": "0.6em"},
-                    color=styles.DOC_REG_TEXT_COLOR,
+                    color=constants.DOC_REG_TEXT_COLOR,
                     height="3.5em",
                 ),
                 pc.divider(),

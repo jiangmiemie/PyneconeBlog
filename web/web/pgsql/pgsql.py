@@ -1,7 +1,7 @@
 import asyncio
 import pynecone as pc
-from web import styles
-from web.components.page import webpage
+from web import constants
+from web.page import webpage
 from web.base_state import State
 from web.pgsql.tsclient import client
 
@@ -33,13 +33,13 @@ def format_search_results(result):
             pc.text(
                 result["document"]["heading"],
                 font_weight=600,
-                color=styles.DOC_HEADER_COLOR,
+                color=constants.DOC_HEADER_COLOR,
             ),
             pc.divider(),
             pc.text(
                 result["document"]["description"],
                 font_weight=400,
-                color=styles.DOC_REG_TEXT_COLOR,
+                color=constants.DOC_REG_TEXT_COLOR,
             ),
             href=result["document"]["href"],
         ),
@@ -59,7 +59,7 @@ def get_search():
                 placeholder="查找文章",
                 on_change=NavbarState.set_search_input,
                 _focus={
-                    "border": f"2px solid {styles.ACCENT_COLOR}",
+                    "border": f"2px solid {constants.ACCENT_COLOR}",
                 },
                 backdrop_filter="blur(10px)",
             ),
@@ -98,7 +98,7 @@ def pgsql() -> pc.Component:
                                 placeholder="智能查找",
                                 on_change=NavbarState.set_search_input,
                                 _focus={
-                                    "border": f"2px solid {styles.ACCENT_COLOR}",
+                                    "border": f"2px solid {constants.ACCENT_COLOR}",
                                 },
                                 backdrop_filter="blur(10px)",
                             ),
@@ -109,7 +109,7 @@ def pgsql() -> pc.Component:
                                 placeholder="数据库语法：查",
                                 on_change=NavbarState.set_search_input,
                                 _focus={
-                                    "border": f"2px solid {styles.ACCENT_COLOR}",
+                                    "border": f"2px solid {constants.ACCENT_COLOR}",
                                 },
                                 backdrop_filter="blur(10px)",
                             ),
@@ -120,7 +120,7 @@ def pgsql() -> pc.Component:
                                 placeholder="数据库语法：增删改",
                                 on_change=NavbarState.set_search_input,
                                 _focus={
-                                    "border": f"2px solid {styles.ACCENT_COLOR}",
+                                    "border": f"2px solid {constants.ACCENT_COLOR}",
                                 },
                                 backdrop_filter="blur(10px)",
                             ),
