@@ -1,8 +1,8 @@
 import pynecone as pc
-from blog import constants
+from web import constants
 
 config = pc.Config(
-    app_name="blog",
+    app_name="web",
     port=3000,
     backend_port=8000,
     api_url=constants.BACKEND_URL,

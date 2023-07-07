@@ -1,7 +1,7 @@
 import pynecone as pc
-from blog.base_state import State as BS
-from blog.templates.page import webpage
-from blog.constants import MAIN_URL
+from web.base_state import State as BS
+from web.components.page import webpage
+from web.constants import MAIN_URL
 
 
 class LoginState(BS):

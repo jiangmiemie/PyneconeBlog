@@ -1,5 +1,5 @@
 import pynecone as pc
-from blog import constants, styles
+from web import constants, styles
 
 footer_item_style = {
     "font_family": "Inter",

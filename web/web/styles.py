@@ -1,5 +1,5 @@
 import pynecone as pc
-from blog.constants import MAIN_URL
+from web.constants import MAIN_URL
 
 # General styles.
 BOLD_WEIGHT = "800"

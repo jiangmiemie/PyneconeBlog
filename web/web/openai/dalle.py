@@ -2,9 +2,9 @@ import os
 import openai
 import pynecone as pc
 from dotenv import load_dotenv
-from blog.base_state import State as BS
-from blog.templates.page import webpage
-from blog.constants import MAIN_URL
+from web.base_state import State as BS
+from web.components.page import webpage
+from web.constants import MAIN_URL
 
 load_dotenv()
 OPENAIKEY = os.getenv("OPENAIKEY")

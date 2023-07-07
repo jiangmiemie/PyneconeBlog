@@ -39,6 +39,6 @@ def get_path(component_fn: Callable):
     return (
         module.__name__.replace(".", "/")
         .replace("_", "-")
-        .replace("blog/", "")
+        .replace("web/", "")
         .replace("pages", "")
     )

@@ -1,7 +1,7 @@
 import psycopg2
 from configparser import ConfigParser
 from collections.abc import Iterable
-from blog.constants import MAIN_URL
+from web.constants import MAIN_URL
 
 
 class Pagelist:

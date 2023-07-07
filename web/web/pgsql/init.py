@@ -1,5 +1,5 @@
 import os
-from blog.tsclient import updata_data, init_db
+from web.pgsql.tsclient import updata_data, init_db
 
 FILE_DIR = os.path.join("assets", "pages")
 

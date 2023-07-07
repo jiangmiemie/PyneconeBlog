@@ -1,25 +1,16 @@
 import pynecone as pc
-from blog import constants, styles
-from blog.templates.page import webpage
+from web import constants, styles
+from web.components.page import webpage
 
 
 difficulty_colors = {"Blog": "green", "Spider": "orange", "project": "blue"}
 example_list = [
     {
-        "name": "Blog",
-        "difficulty": "Blog",
-        "tags": ["全栈"],
-        "description": "personal web site",
-        "img": "/2023/blog.png",
-        "source": "https://github.com/jiangmiemie/PyneconeBlog",
-        "url": constants.MAIN_URL,
-    },
-    {
         "name": "ChatGPT",
         "difficulty": "project",
         "tags": ["全栈"],
         "description": "personal web site",
-        "img": "/2023/blog.png",
+        "img": "/bg.png",
         "source": "",
         "url": "{}/openai/chatgpt".format(constants.MAIN_URL),
     },
@@ -28,18 +19,18 @@ example_list = [
         "difficulty": "project",
         "tags": ["全栈"],
         "description": "personal web site",
-        "img": "/2023/blog.png",
+        "img": "/bg.png",
         "source": "",
         "url": "{}/openai/dalle".format(constants.MAIN_URL),
     },
     {
-        "name": "云盘",
+        "name": "数据库",
         "difficulty": "project",
         "tags": ["全栈"],
         "description": "personal web site",
-        "img": "/2023/blog.png",
+        "img": "/bg.png",
         "source": "",
-        "url": constants.SPACE_URL,
+        "url": "{}/pgsql/pgsql".format(constants.MAIN_URL),
     },
 ]
 
@@ -55,7 +46,8 @@ class Gallery(pc.Model):
     source: str
 
 
-def component_grid():
+@webpage(path="/", index=True)
+def project():
     sidebar = []
     for category in example_list:
         sidebar.append(
@@ -120,12 +112,7 @@ def component_grid():
                 },
             )
         )
-    return pc.box(pc.responsive_grid(*sidebar, columns=[1, None, 5], spacing="1em"))
-
-
-@webpage()
-def project():
     return pc.box(
-        component_grid(),
-        padding="1em 4em",
+        pc.responsive_grid(*sidebar, columns=[1, None, 5], spacing="1em"),
+        padding="6em 4em",
     )
