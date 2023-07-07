@@ -1,24 +1,16 @@
 [中文](README.md) | [English](READMEen.md)
 
-## 示例
-
-https://www.jiangmiemie.com
-
-
 ## 目标
 
-用纯Python构建一个**易于管理**、**低耦合**、**自由**的应用网站（包含应用演示与文档说明）其中Markdown是一等公民，用户只需放置md文件即可生成网页。
+用纯Python构建一个**易于管理**、**低耦合**、**自由**的应用网站
 
-参考站点：
-[docusaurus](https://docusaurus.io/zh-CN/docs/category/guides)
-[pynecone](https://pynecone.io/)
 
 ## 使用
 
 默认服务器已安装Python3.8或更高版本
 
 ### 准备
-数据使用了默认为PGSQL，因此需要**新建一个数据库**。假设你的数据库信息如下：
+数据库使用了PGSQL，因此需要**新建一个数据库**。假设你的数据库信息如下：
 
 database=reflexblog
 user=reflexblog
@@ -55,4 +47,4 @@ OPENAIKEY = "sk-****************************"
 
 ### 运行
 
-切换到本文件夹所在目录，运行`bash run.sh`
+切换到本文件夹所在目录（/web），运行`bash run.sh`

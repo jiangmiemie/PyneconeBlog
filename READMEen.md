@@ -1,24 +1,16 @@
 [Chinese](README.md) | [English](READMEen.md)
 
-## Example
+## Objectives
 
-https://www.jiangmiemie.com
+Build a **easy to manage**, **low coupling**, **free** application website in pure Python
 
-
-## Objective
-
-Build a **easy-to-manage**, **low-coupling**, **free** application website in pure Python (including application demo and documentation instructions) where Markdown is a first-class citizen and the user only needs to place md files to generate web pages.
-
-Reference sites:
-[docusaurus](https://docusaurus.io/zh-CN/docs/category/guides)
-[pynecone](https://pynecone.io/)
 
 ## Use
 
-Default server has Python 3.8 or higher installed
+Default server with Python 3.8 or higher installed
 
 ### Preparation
-The data uses the default of PGSQL, so you need to **create a new database**. Assume your database information is as follows:
+The database uses PGSQL, so you need to **create a new database**. Assume your database information is as follows:
 
 database=reflexblog
 user=reflexblog
@@ -34,7 +26,7 @@ user=reflexblog
 password=yourpassword
 ```
 
-If you want to use some applications, then please also create a new file `.env` in the root directory where you can place the relevant apikeys. For example
+If you want to use some applications, then please also create a new file `.env` in the root directory and place the relevant apikeys in it. For example
 
 ```
 OPENAIKEY = "sk-****************************"
@@ -42,12 +34,12 @@ OPENAIKEY = "sk-****************************"
 
 ### Download the dependencies
 
-`pip install -r requirements.txt`
+``pip install -r requirements.txt``
 
 
 ### Domain name
 
-Apply the front-end domain and back-end domain and configure SSL.
+Apply the front-end domain and back-end domain, and configure SSL.
 
 Modify [constants.py](blog/constants.py)
 `MAIN_URL` for your front-end domain name: the front-end is displayed here.
@@ -55,4 +47,4 @@ Modify [constants.py](blog/constants.py)
 
 ### Run
 
-Switch to the directory where this folder is located and run `bash run.sh`
+Switch to the directory where this folder is located (/web) and run `bash run.sh`
