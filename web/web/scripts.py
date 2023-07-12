@@ -1,4 +1,4 @@
-import pynecone as pc
+import reflex as pc
 
 
 js_clickEffect = """

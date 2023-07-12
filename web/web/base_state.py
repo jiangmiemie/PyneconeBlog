@@ -1,5 +1,5 @@
 import inspect
-import pynecone as pc
+import reflex as pc
 from typing import Callable
 from pynecone.base import Base
 

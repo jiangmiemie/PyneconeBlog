@@ -1,6 +1,6 @@
 import os
 import openai
-import pynecone as pc
+import reflex as pc
 from dotenv import load_dotenv
 from web.base_state import State as BS
 from web.page import webpage

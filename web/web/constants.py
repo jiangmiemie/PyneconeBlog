@@ -1,4 +1,4 @@
-import pynecone as pc
+import reflex as pc
 import platform
 
 server = "Linux" in platform.platform()
